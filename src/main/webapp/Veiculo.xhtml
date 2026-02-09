@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/estrutura.xhtml">
+
+	<ui:define name="titulo">Cadastro de Veiculos</ui:define>
+
+	<h1>Cadastro de Veiculos</h1>
+
+	<h:form id="frm">
+
+		<p:panel style="margin-top: 10px">
+			<p:messages autoUpdate="true" />
+
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin-top: 20px">
+
+					<p:outputLabel value="Modelo" />
+					<p:inputText size="30" value="#{veiculoBean.veiculo.modelo}" required="true" label="Veiculo" />
+					
+					<p:outputLabel value="Placa" />
+					<p:inputText size="30" value="#{veiculoBean.veiculo.placa}" required="true" label="Placa" />
+
+					<p:outputLabel value="Marca" />
+					<p:selectOneMenu value="#{veiculoBean.veiculo.marca}" converter="marcaConverter" required="true" label="Marca"	style="width: 290px; height: 40px;">
+						<f:selectItem itemLabel="Selecione a Marca"	noSelectionOption="true" />
+						<f:selectItems value="#{veiculoBean.marcas}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Contratado / Proprietário" />
+					<p:selectOneMenu value="#{veiculoBean.veiculo.contratado}" converter="contratadoConverter" required="true" label="Contratado"	style="width: 290px; height: 40px;">
+						<f:selectItem itemLabel="Selecione o Proprietário"	noSelectionOption="true" />
+						<f:selectItems value="#{veiculoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Motorista" />
+					<p:selectOneMenu value="#{veiculoBean.veiculo.motorista}" converter="motoristaConverter" required="true" label="Motorista"	style="width: 290px; height: 40px;">
+						<f:selectItem itemLabel="Selecione o Motorista"	noSelectionOption="true" />
+						<f:selectItems value="#{motoristaBean.motoristas}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel />
+					<p:commandButton value="Cadastrar"	action="#{veiculoBean.adicionar}" update="frm tabela" style="margin-top: 10px; width: 290px; height: 40px;" />
+
+				</p:panelGrid>
+
+			</div>
+
+		</p:panel>
+	</h:form>
+
+	<!-- AQUI VOU MUDAR PRA MODAL -->
+	<h:form>
+		<p:dataTable value="#{veiculoBean.veiculos}" var="obj" id="tabela"
+			paginator="true" rows="5" responsiveLayout="scroll">
+
+			<p:column headerText="Veiculo">
+				<p:outputLabel value="#{obj.modelo}" />
+			</p:column>
+			
+			<p:column headerText="Placa">
+				<p:outputLabel value="#{obj.placa}" />
+			</p:column>
+
+			<p:column headerText="Marca">
+				<p:outputLabel value="#{obj.marca.nome}" width="200" />
+			</p:column>
+
+			<p:column headerText="Proprietário">
+				<p:outputLabel value="#{obj.contratado.nome}" width="200" />
+			</p:column>
+			
+			<p:column headerText="Motorista">
+				<p:outputLabel value="#{obj.motorista.nome}" width="200" />
+			</p:column>
+
+			<p:column headerText="Ações" width="500">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update="@form"	process="@this" style="margin-top: 10px" width="100">
+					<f:setPropertyActionListener value="#{obj}"	target="#{veiculoBean.veiculo}" />
+				</p:commandButton>
+
+				<p:commandButton action="#{veiculoBean.excluir}" icon="pi pi-trash"	update="tabela" process="@this" width="100">
+					<f:setPropertyActionListener value="#{obj}"	target="#{veiculoBean.veiculo}" />
+					<p:confirm header="Confirmação" message="Deseja realmente excluir este Veiculo?" icon="pi pi-exclamation-triangle" />
+				</p:commandButton>
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+</ui:composition>
+
+</html>
