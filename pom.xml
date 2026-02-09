@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.projeto</groupId>
+	<artifactId>projeto</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+	<!-- JAVASE-17-->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.report.sourceEncoding>UTF-8</project.report.sourceEncoding>
+		<maven.compiler.release>17</maven.compiler.release>
+		<jakartaee-api.version>9.1.0</jakartaee-api.version>
+		<compiler-plugin.version>3.13.0</compiler-plugin.version>
+		<war-plugin.version>3.4.0</war-plugin.version>
+	</properties>
+
+	<!-- DEPENDÊNCIAS -->
+	<dependencies>
+
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-web-api</artifactId>
+			<version>${jakartaee-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.faces</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+
+		<!-- VERIFICAR SOBRE AS DEPENDENCIAS WELD-SERVLET E JANDEX PARA O CDI -->
+
+		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>14.0.0</version>
+			<classifier>jakarta</classifier>
+		</dependency>
+
+		<!-- Source:
+		https://mvnrepository.com/artifact/org.primefaces/primefaces-themes -->
+
+
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.1.7.Final</version> <!-- versão compatível com JPA 3.0 -->
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jandex</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+
+		<!-- JSON-B API (se já não vier do jakartaee-web-api) -->
+		<dependency>
+			<groupId>jakarta.json.bind</groupId>
+			<artifactId>jakarta.json.bind-api</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+
+		<!-- Implementação JSON-B (Yasson) -->
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>yasson</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+
+		<!-- JSON-P (necessário para o Yasson) -->
+		<dependency>
+			<groupId>jakarta.json</groupId>
+			<artifactId>jakarta.json-api</artifactId>
+			<version>2.1.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-core</artifactId>
+			<version>5.1.2.Final</version>
+		</dependency>
+
+		<!-- Or a specific 9.5-compatible
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1200-jdbc41</version>
+		</dependency>
+			version from Maven Central -->
+
+		<!-- Use a compatible driver version, e.g., 42.2.27 or an older one -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.27</version>
+		</dependency>
+
+
+		<!-- MariaDB Driver 
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.5.6</version>
+		</dependency>
+		-->
+
+	</dependencies>
+
+
+	<build>
+		<!-- Sets the name of the final built file (e.g., myapp.jar) -->
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<!-- Example: Configuring the Java compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${war-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
