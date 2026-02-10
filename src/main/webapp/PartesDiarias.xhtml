@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="estrutura.xhtml">
+	
+		<ui:define name="titulo">Cadastro de Partes Diárias</ui:define>
+		<h1>Cadastro de Partes Diárias</h1>
+		
+	<h:form id="formCadastro">
+
+		<p:messages id="messages" closable="true" />
+
+	    <!-- FORMULARIO DE CADASTRO-->
+<div class="ui-fluid form-compacto">
+
+    <p:panelGrid layout="grid" style="margin-top: 20px">
+
+        <!-- Linha 1 -->
+        <p:row>
+     
+            <p:column styleClass="ui-grid-col-2">
+              <p:outputLabel value="Nome Obra" />
+				<p:selectOneMenu value="#{parteDiariaBean.ptdia.obra}" converter="obraConverter" required="true" label="Obra"	style="width: 240px; height: 30px;">
+					<f:selectItem itemLabel="Selecione a Obra"	noSelectionOption="true" />
+					<f:selectItems value="#{parteDiariaBean.obras}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+					<p:ajax update="cidade, contratante" />
+			  </p:selectOneMenu>
+			</p:column>
+
+            <p:column styleClass="ui-grid-col-2">
+                <p:outputLabel for="cidade" value="Cidade" />
+                <p:inputText id="cidade" value="#{parteDiariaBean.ptdia.obra.cidade}" readonly="true" />
+            </p:column>
+            
+            <p:column styleClass="ui-grid-col-2">
+                <p:outputLabel for="contratante" value="Contratante" />
+                <p:inputText id="contratante" value="#{parteDiariaBean.ptdia.obra.contratante.nome}" readonly="true" />
+            </p:column>
+        </p:row>
+
+        <!-- Linha 2 - Contratado / Veículo / Motorista -->
+        <p:row>
+            <p:column styleClass="ui-grid-col-2">
+                <p:outputLabel value="Contrato" />
+				<p:selectOneMenu value="#{parteDiariaBean.ptdia.contrato}" converter="contratoConverter" required="true" label="Contratado"	style="width: 240px; height: 30px;">
+					<f:selectItem itemLabel="Selecione um Contratado" noSelectionOption="true" />
+					<f:selectItems value="#{parteDiariaBean.contratos}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+					<p:ajax listener="#{parteDiariaBean.carregarVeiculos}" update="veiculo" resetValues="true" />
+			</p:selectOneMenu>
+            </p:column>
+
+            <p:column styleClass="ui-grid-col-2">
+                <p:outputLabel value="Veiculo" />
+				<p:selectOneMenu id="veiculo" value="#{parteDiariaBean.ptdia.veiculo}" converter="veiculoConverter" required="true" label="Veiculo"	style="width: 240px; height: 30px;">
+					<f:selectItem itemLabel="Selecione um Veiculo" noSelectionOption="true" />
+					<f:selectItems value="#{parteDiariaBean.veiculos}" var="e" itemLabel="#{e.modelo}" itemValue="#{e}" />
+					<p:ajax update="motorista" />
+			</p:selectOneMenu>
+            </p:column>
+
+            <p:column styleClass="ui-grid-col-2">
+                <p:outputLabel for="motorista" value="Motorista" />
+                <p:inputText id="motorista" value="#{parteDiariaBean.ptdia.veiculo.motorista.nome}" readonly="true" />
+            </p:column>
+            
+			<p:column styleClass="ui-grid-col-2">
+			     <p:outputLabel for="data" value="Data" />
+				  <p:datePicker id="data" value="#{parteDiariaBean.ptdia.data}" pattern="dd/MM/yyyy" showIcon="true" required="true" label="Data"/>
+			 </p:column>
+        </p:row>
+
+        <!-- Linha 3 - Horas -->
+        <p:row>
+          <p:column styleClass="ui-grid-col-5">
+            <p:fieldset legend="Dados de HORAS">
+              <div class="hr-inline">
+                <p:outputLabel for="horaInicial" value="Hora inicial" />
+                <p:datePicker id="horaInicial" value="#{parteDiariaBean.ptdia.horaInicio}" timeOnly="true" pattern="HH:mm" style="width:80px"/>
+           
+                <p:outputLabel for="horaFinal" value="Hora final" />
+                <p:datePicker id="horaFinal" value="#{parteDiariaBean.ptdia.horaFim}" timeOnly="true" pattern="HH:mm" style="width:80px"/>
+       		  </div>
+          </p:fieldset>
+        </p:column>
+            
+   			 <!-- Fieldset KM -->
+			<p:column styleClass="ui-grid-col-6">
+        		<p:fieldset legend="Dados de KM">
+            		<div class="km-inline">
+                		<p:outputLabel for="odometroInicial" value="Odômetro Inicial" />
+                		<p:inputText id="odometroInicial" value="#{parteDiariaBean.ptdia.odomInicio}" style="width:100px"/>
+
+                		<p:outputLabel for="odometroFinal" value="Odômetro Final" />
+                		<p:inputText id="odometroFinal" value="#{parteDiariaBean.ptdia.odomFim}" style="width:100px"/>
+            		</div>
+        		</p:fieldset>
+    		</p:column>
+        </p:row>
+        
+    <p:row>
+      <p:column styleClass="ui-grid-col-4">
+         <p:outputLabel value="Serviço" />
+			  <p:selectOneMenu value="#{parteDiariaBean.ptdia.servico}" converter="servicoConverter" required="true" label="Serviço"	style="width: 482px; height: 30px;">
+				 <f:selectItem itemLabel="Selecione a Tipo de Serviço"	noSelectionOption="true" />
+				 <f:selectItems value="#{parteDiariaBean.servicos}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+			  </p:selectOneMenu>
+      </p:column>
+                
+         <p:column styleClass="ui-grid-col-2">
+            <p:outputLabel for="" value="Observações" />
+            <p:inputTextarea value="#{parteDiariaBean.ptdia.observacao}" rows="6" cols="60" autoResize="true" style="width: 486px;" placeholder="Descreva algum comentário aqui..." />
+         </p:column>
+    </p:row>
+
+    </p:panelGrid>
+
+</div>
+		
+		<div class="card">
+
+			<p:toolbar style="margin-top: 20px">
+
+				<p:toolbarGroup>
+					<p:commandButton type="button" value="Novo" icon="pi pi-plus" styleClass="mr-2" />
+					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{parteDiariaBean.adicionar}" update=":formCadastro:messages :formCadastro" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:button icon="pi pi-search" value="Pesquisar"	styleClass="ui-button-warning" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+		</div>
+
+	</h:form>
+	
+	</ui:composition>
+
+</html>
