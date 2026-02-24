@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>br.com.projeto</groupId>
+		<artifactId>projeto-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>projeto-core</artifactId>
+	<name>projeto-core</name>
+	<packaging>jar</packaging>
+
+	<dependencies>
+
+		<!-- ÈSSA DEPENDENCIA É PQ MEU PROJETO USA ENTITYMANAGER-->
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>${jakarta.persistence.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Source:
+		https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>6.16.0</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.enterprise</groupId>
+			<artifactId>jakarta.enterprise.cdi-api</artifactId>
+			<version>3.0.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Or a specific 9.5-compatible
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4-1200-jdbc41</version>
+		</dependency>
+			version from Maven Central -->
+
+		<!-- Use a compatible driver version, e.g., 42.2.27 or an older one -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.27</version>
+		</dependency>
+
+		<!-- MariaDB Driver 
+		<dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>3.5.6</version>
+		</dependency>
+		-->
+
+	</dependencies>
+
+</project>
