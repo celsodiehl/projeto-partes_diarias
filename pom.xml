@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.com.projeto</groupId>
+  <artifactId>projeto-parent</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>projeto-parent</name>
+  
+  <modules>
+  	<module>projeto-core</module>
+  	<module>projeto-web</module>
+  </modules>
+  
+  	<!-- JAVASE-17-->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.report.sourceEncoding>UTF-8</project.report.sourceEncoding>
+		<maven.compiler.release>17</maven.compiler.release>
+		<jakartaee-api.version>9.1.0</jakartaee-api.version>
+    <jakarta.persistence.version>3.0.0</jakarta.persistence.version>
+		<compiler-plugin.version>3.13.0</compiler-plugin.version>
+		<war-plugin.version>3.4.0</war-plugin.version>
+	</properties>
+	
+		<build>
+		<!-- Sets the name of the final built file (e.g., myapp.jar) -->
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<!-- Example: Configuring the Java compiler plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler-plugin.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>${war-plugin.version}</version>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
