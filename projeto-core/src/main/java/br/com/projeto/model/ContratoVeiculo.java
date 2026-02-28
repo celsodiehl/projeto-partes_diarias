@@ -20,7 +20,9 @@ Evitar conflito de veículo duplicado no mesmo período */
 @Table(name = "contrato_veiculo")
 public class ContratoVeiculo implements Serializable, Base {
 
-    @Id
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

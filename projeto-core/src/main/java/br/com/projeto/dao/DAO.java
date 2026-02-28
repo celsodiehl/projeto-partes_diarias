@@ -2,9 +2,11 @@ package br.com.projeto.dao;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import br.com.projeto.model.Base;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 public class DAO<T extends Base> implements Serializable {
 
@@ -52,6 +54,18 @@ public class DAO<T extends Base> implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<T> buscarTodos(String jpql) {
 		return manager.createQuery(jpql).getResultList();
+	}
+	
+	//BUSCA COM PARAMETROS, REUTULIZAVEL
+	public List<T> buscarComParametros(Class<T> clazz, String jpql, Map<String, Object> parametros) {
+
+	    TypedQuery<T> query = manager.createQuery(jpql, clazz);
+
+	    for (Map.Entry<String, Object> entry : parametros.entrySet()) {
+	        query.setParameter(entry.getKey(), entry.getValue());
+	    }
+
+	    return query.getResultList();
 	}
 
 }

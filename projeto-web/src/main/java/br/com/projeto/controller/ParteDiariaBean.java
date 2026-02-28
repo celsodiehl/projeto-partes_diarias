@@ -88,10 +88,10 @@ public class ParteDiariaBean implements Serializable {
 
 	public void carregarVeiculos() {
 
-		if (ptdia.getContrato() != null && ptdia.getContrato().getContratado() != null) {
+		if (ptdia.getContrato() != null) {
 
-			Long idContratado = ptdia.getContrato().getContratado().getId();
-			veiculos = veiculoService.buscarPorContratado(idContratado);
+			Long idContrato = ptdia.getContrato().getId();
+			veiculos = veiculoService.buscarPorContrato(idContrato);
 
 		} else {
 			veiculos = new ArrayList<>();
