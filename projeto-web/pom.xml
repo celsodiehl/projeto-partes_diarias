@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>br.com.projeto</groupId>
+		<artifactId>projeto-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<artifactId>projeto-web</artifactId>
+	<name>projeto web</name>
+	<packaging>war</packaging>
+
+
+	<!-- DEPENDÊNCIAS -->
+	<dependencies>
+
+		<!-- DEPENDÊNCIAS DO CORE QUE RECEBE CLASSES -->
+		<dependency>
+			<groupId>br.com.projeto</groupId>
+			<artifactId>projeto-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>jakarta.platform</groupId>
+			<artifactId>jakarta.jakartaee-web-api</artifactId>
+			<version>${jakartaee-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!--
+		<dependency>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		-->
+
+		<!--
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>jakarta.faces</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+		  -->
+
+		<!-- VERIFICAR SOBRE AS DEPENDENCIAS WELD-SERVLET E JANDEX PARA O CDI -->
+
+		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>14.0.0</version>
+			<classifier>jakarta</classifier>
+		</dependency>
+
+		<!--
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.1.7.Final</version> versão compatível com JPA 3.0
+		</dependency>
+		-->
+
+		<!--
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jandex</artifactId>
+			<version>3.1.6</version>
+		</dependency>
+		-->
+
+		<!-- JSON-B API (se já não vier do jakartaee-web-api) -->
+		<!--
+		<dependency>
+			<groupId>jakarta.json.bind</groupId>
+			<artifactId>jakarta.json.bind-api</artifactId>
+			<version>3.0.0</version>
+		</dependency>
+		-->
+
+		<!-- Implementação JSON-B (Yasson) -->
+		<!--
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>yasson</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+		-->
+
+		<!-- JSON-P (necessário para o Yasson) -->
+		<!--
+		<dependency>
+			<groupId>jakarta.json</groupId>
+			<artifactId>jakarta.json-api</artifactId>
+			<version>2.1.3</version>
+		</dependency>
+		-->
+
+<!--
+		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-core</artifactId>
+			<version>5.1.2.Final</version>
+		</dependency>
+		-->
+
+	</dependencies>
+
+</project>

@@ -1,0 +1,85 @@
+<ui:composition template="/WEB-INF/template/MenuGenerico.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="corpo">
+
+		<h:form id="frm">
+			<p:messages autoUpdate="true" />
+
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="Medicamento" />
+				<p:inputText size="30" value="#{medicamentoBean.medicamento.nome}"
+					required="true" label="Medicamento" />
+
+				<p:outputLabel value="Apresentação" />
+				<p:inputText size="30" value="#{medicamentoBean.medicamento.apresentacao}"
+					required="true" label="Apresentação" />
+					
+					<p:outputLabel value="Laboratorio" />
+					<p:selectOneMenu value="#{medicamentoBean.medicamento.laboratorio}" required="true" label="Laboratorio" >
+						  <f:selectItem itemLabel="Selecione o Laboratório" noSelectionOption="true"/>
+						  <f:selectItem itemLabel="Bayer" itemValue="BAYER"/>
+						  <f:selectItem itemLabel="Teuto" itemValue="TEUTO"/>
+						  <f:selectItem itemLabel="Cimed" itemValue="CIMED"/>
+						  <f:selectItem itemLabel="Neo Quimica" itemValue="NEO QUIMICA"/>
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Registro MS" />
+					<p:inputMask mask="9.9999.9999.999-9" size="13" value="#{medicamentoBean.medicamento.registro}" required="true" label="Registro MS"/>
+
+					<p:outputLabel value="Preço" />
+					<p:inputText size="4" value="#{medicamentoBean.medicamento.preco}" required="true" label="Preço">
+						<f:convertNumber minFractionDigits="2" locale="pt_BR" minIntegerDigits="0"/>
+					</p:inputText>
+					
+					<p:outputLabel />
+					<p:commandButton value="Cadastrar" action="#{medicamentoBean.adicionar}" update="frm tabela" style="margin-top: 10px"/>	
+			
+			</p:panelGrid>
+			
+			<p:dataTable value="#{medicamentoBean.medicamentos}" var="obj" id="tabela" paginator="true" rows="5">
+			
+			<p:column headerText="Medicamento">
+				<p:outputLabel value="#{obj.nome}" />
+			</p:column>
+			
+			<p:column headerText="Apresentação">
+				<p:outputLabel value="#{obj.apresentacao}" width="200" />
+			</p:column>
+			
+			<p:column headerText="Laboratório">
+				<p:outputLabel value="#{obj.laboratorio}" width="200"/>
+			</p:column>
+			
+			<p:column headerText="Registro MS">
+				<p:outputLabel value="#{obj.registro}" width="150"/>
+			</p:column>
+			
+			<p:column headerText="Preço">
+				<p:outputLabel value="#{obj.preco}" width="100">
+					<f:convertNumber type="currency" currencySymbol="R$"/>
+				</p:outputLabel>
+			</p:column>
+			
+			<p:column headerText="Ações" width="500">
+				<p:commandButton icon="pi-pi-pencil" update="@form" process="@this" style="margin-top: 10px" width="100">
+					<f:setPropertyActionListener value="#{obj}" target="#{medicamentoBean.medicamento}" />
+				</p:commandButton>
+				
+				<p:commandButton action="#{medicamentoBean.excluir}" icon="pi pi-trash" update="tabela" process="@this" width="100">
+					<f:setPropertyActionListener value="#{obj}" target="#{medicamentoBean.medicamento}"/>
+				</p:commandButton>
+			</p:column>
+			
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
