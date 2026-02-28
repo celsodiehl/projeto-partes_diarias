@@ -7,7 +7,7 @@
 
     <persistence-unit name="MGUSollusPU" transaction-type="RESOURCE_LOCAL">
 
-        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <properties>
 
@@ -19,13 +19,14 @@
 
 	        <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <!-- Schema -->
-            <property name="jakarta.persistence.schema-generation.database.action"  value="update"/>
-            <property name="hibernate.id.new_generator_mappings" value="true"/>
-			<property name="hibernate.hbm2ddl.auto" value="update"/>
+            <!-- <property name="jakarta.persistence.schema-generation.database.action"  value="update"/> -->
+			 <!--<property name="hibernate.hbm2ddl.auto" value="update"/> -->
+			 <property name="hibernate.hbm2ddl.auto" value="update"/>
 
             <!-- SQL -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.id.new_generator_mappings" value="true"/>
 
             <!-- NÃO configurar provider_class no main -->
         </properties>

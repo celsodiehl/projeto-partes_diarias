@@ -16,8 +16,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.report.sourceEncoding>UTF-8</project.report.sourceEncoding>
 		<maven.compiler.release>17</maven.compiler.release>
-		<jakartaee-api.version>9.1.0</jakartaee-api.version>
-    <jakarta.persistence.version>3.0.0</jakarta.persistence.version>
+		<jakartaee-api.version>10.0.0</jakartaee-api.version>
+    	<jakarta.persistence.version>3.1.0</jakarta.persistence.version>
 		<compiler-plugin.version>3.13.0</compiler-plugin.version>
 		<war-plugin.version>3.4.0</war-plugin.version>
 	</properties>

@@ -9,22 +9,11 @@ import br.com.projeto.model.Veiculo;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped // ALTEREI CHAT
-public class VeiculoService implements Serializable{
+public class VeiculoService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	/* ALTEREI AKI CHAT
-	@PersistenceContext
-	private EntityManager em;
 
-	public Veiculo find(Long id) {
-		return em.find(Veiculo.class, id);
-	} */
-	
-	//@Inject
-	//private DAO<Veiculo> dao;
 	private DAO<Veiculo> dao = new DAO<>();
-	
 
 	public void salvar(Veiculo obj) throws NegocioException {
 		if (obj.getModelo().length() < 3) {
@@ -32,17 +21,22 @@ public class VeiculoService implements Serializable{
 		}
 		dao.salvar(obj);
 	}
-	
+
 	public void remover(Veiculo obj) throws NegocioException {
 		dao.remover(Veiculo.class, obj.getId());
 	}
-	
+
 	public List<Veiculo> todos() {
 		return dao.buscarTodos("FROM Veiculo o ORDER BY o.modelo");
 	}
-	
+
 	public Veiculo buscarPorId(Long id) {
-	    return dao.buscarPorId(Veiculo.class, id);
+		return dao.buscarPorId(Veiculo.class, id);
 	}
-	
+
+	// Quando selecionar um Contrato, carregar os Veículos do Contratado daquele contrato.
+	public List<Veiculo> buscarPorContratado(Long idContratado) {
+		return dao.buscarTodos("FROM Veiculo v WHERE v.contratado.id = " + idContratado + " ORDER BY v.modelo");
+	}
+
 }

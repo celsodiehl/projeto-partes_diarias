@@ -18,7 +18,7 @@
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>
-			<version>${jakarta.persistence.version}</version>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -27,8 +27,7 @@
 		<dependency>
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
-			<version>6.16.0</version>
-			<scope>compile</scope>
+			<version>6.21.3</version>
 		</dependency>
 
 		<dependency>
@@ -36,6 +35,12 @@
 			<artifactId>jakarta.enterprise.cdi-api</artifactId>
 			<version>3.0.0</version>
 			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate.orm</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>6.1.7.Final</version> <!--versão compatível com JPA 3.0 -->
 		</dependency>
 
 		<!-- Or a specific 9.5-compatible
