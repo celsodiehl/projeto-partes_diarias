@@ -13,20 +13,8 @@ public class ContratoService implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	/* ALTEREI AKI CHAT
-	@PersistenceContext
-	private EntityManager em;
-
-	public Contrato find(Long id) {
-		return em.find(Contrato.class, id);
-	} */
-	
-	
-	//@Inject
-	//private DAO<Contrato> dao;
 	private DAO<Contrato> dao = new DAO<>();
 	
-
 	public void salvar(Contrato obj) throws NegocioException {
 		if (obj.getNome().length() < 3) {
 			throw new NegocioException("Contrato Não Pode Ser Menor que 3 Caracteres!");
@@ -39,7 +27,12 @@ public class ContratoService implements Serializable{
 	}
 	
 	public List<Contrato> todos() {
-		return dao.buscarTodos("FROM Contrato o ORDER BY o.nome");
+	    return dao.buscarTodos(
+	        "SELECT DISTINCT c FROM Contrato c " +
+	        "LEFT JOIN FETCH c.veiculos cv " +
+	        "LEFT JOIN FETCH cv.veiculo " +
+	        "ORDER BY c.nome"
+	    );
 	}
 	
 	public Contrato buscarPorId(Long id) {

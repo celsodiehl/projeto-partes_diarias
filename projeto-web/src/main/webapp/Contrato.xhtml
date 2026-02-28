@@ -48,6 +48,9 @@
 						<f:selectItems value="#{contratoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
 				</p:selectOneMenu>
 			</p:row>
+			
+		<p:pickList value="#{contratoBean.dualVeiculos}" var="v" itemLabel="#{v.modelo}" itemValue="#{v}"
+            converter="veiculoConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" />
 				
 			<p:row>
 			  <p:column styleClass="ui-grid-col-2">
@@ -117,6 +120,12 @@
 			
 			<p:column headerText="Contratado">
 				<p:outputLabel value="#{obj.contratado.nome}" />
+			</p:column>
+			
+			<p:column headerText="Veículos">
+    			<ui:repeat value="#{obj.veiculos}" var="cv" varStatus="status">
+       			 	#{cv.veiculo.modelo}#{!status.last ? ', ' : ''}
+   				 </ui:repeat>
 			</p:column>
 			
 			<p:column headerText="Data Início">
