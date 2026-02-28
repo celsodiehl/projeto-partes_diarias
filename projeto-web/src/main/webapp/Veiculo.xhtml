@@ -11,7 +11,7 @@
 
 	<h1>Cadastro de Veiculos</h1>
 
-	<h:form id="frm">
+	<h:form id="formCadastro">
 
 		<p:panel style="margin-top: 10px">
 			<p:messages autoUpdate="true" />
@@ -44,19 +44,19 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel />
-					<p:commandButton value="Cadastrar"	action="#{veiculoBean.adicionar}" update="frm tabela" style="margin-top: 10px; width: 290px; height: 40px;" />
+					<p:commandButton value="Cadastrar"	action="#{veiculoBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />
 
 				</p:panelGrid>
 
 			</div>
 
 		</p:panel>
+		
 	</h:form>
 
-	<!-- AQUI VOU MUDAR PRA MODAL -->
+	<!-- DATA TABLE COM TODOS VEICULOS -->
 	<h:form>
-		<p:dataTable value="#{veiculoBean.veiculos}" var="obj" id="tabela"
-			paginator="true" rows="5" responsiveLayout="scroll">
+		<p:dataTable value="#{veiculoBean.veiculos}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 
 			<p:column headerText="Veiculo">
 				<p:outputLabel value="#{obj.modelo}" />
@@ -79,7 +79,7 @@
 			</p:column>
 
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update="@form"	process="@this" style="margin-top: 10px" width="100">
+			    <p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update=":formDialog" process="@this" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}"	target="#{veiculoBean.veiculo}" />
 				</p:commandButton>
 
@@ -91,6 +91,44 @@
 
 		</p:dataTable>
 	</h:form>
+	
+		<!-- DIALOG DE EDIÇÃO-->
+	<p:dialog header="Editar Veiculo" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+
+    <h:form id="formDialog">
+
+		<div class="field">
+        	<p:outputLabel value="Veiculo" />
+        	<p:inputText value="#{veiculoBean.veiculo.modelo}" />
+        </div>
+        
+        <div class="field">
+        	<p:outputLabel value="Placa" />
+        <br/>
+			<p:inputText size="8" value="#{veiculoBean.veiculo.placa}" required="true"/>
+        </div>
+        
+        <div class="field">
+        	<p:outputLabel value="Marca" />
+        	<p:inputText value="#{veiculoBean.veiculo.marca.nome}" />
+        </div>
+        
+        <div class="field">
+        	<p:outputLabel value="Proprietário" />
+        	<p:inputText value="#{veiculoBean.veiculo.contratado.nome}" />
+        </div>
+        
+       <div class="field">
+        	<p:outputLabel value="Motorista" />
+        	<p:inputText value="#{veiculoBean.veiculo.motorista.nome}" />
+        </div>
+        <br/>
+
+        <p:commandButton value="Salvar" action="#{veiculoBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
+
+    </h:form>
+
+</p:dialog>
 
 </ui:composition>
 
