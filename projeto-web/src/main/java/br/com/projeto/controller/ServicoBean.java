@@ -18,7 +18,6 @@ public class ServicoBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	//@Inject ALTEREI AKI CHAT COMENTEI
 	private Servico ob;
 
 	@Inject
