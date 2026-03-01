@@ -11,11 +11,12 @@
 		
 <h1>Cadastro de Obras</h1>
 
-<h:form id="frm">
+<h:form id="formCadastro">
 		
 		<p:panel style="margin-top: 10px">
 		<p:messages autoUpdate="true" />
 
+	<!-- FORMULARIO DE CADASTRO-->
 	<div class="ui-fluid">
 			<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin-top: 20px">
 
@@ -32,18 +33,18 @@
 					</p:selectOneMenu>
 					
 				<p:outputLabel />
-				<p:commandButton value="Cadastrar" action="#{obraBean.adicionar}" update="frm tabela" style="margin-top: 10px; width: 290px; height: 40px;"/>	
+				<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{obraBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />
 			
 			</p:panelGrid>
 			
-		</div>
+		</div><!-- FIM FORMULARIO DE CADASTRO-->
 			
 		</p:panel>
 	</h:form>
 			
 	<!-- DATATABLE COM TODOS OBRASS-->
 	<h:form>
-			<p:dataTable value="#{obraBean.obras}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">>
+			<p:dataTable value="#{obraBean.obras}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			
 			<p:column headerText="Nome">
 				<p:outputLabel value="#{obj.nome}" />
@@ -58,7 +59,8 @@
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update="@form" process="@this" style="margin-top: 10px" width="100">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update=":formDialog" oncomplete="PF('dlgEditar').show()" 
+					style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{obraBean.obra}" />
 				</p:commandButton>
 				
@@ -69,6 +71,36 @@
 			
 			</p:dataTable>
 	</h:form>
+	
+	<!-- DIALOG DE EDIÇÃO-->
+<p:dialog header="Editar Obra" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+
+    <h:form id="formDialog">
+
+		<div class="field">
+        	<p:outputLabel value="Nome" />
+        	<p:inputText value="#{obraBean.obra.nome}" />
+        </div>
+        
+        <div class="field">
+        	<p:outputLabel value="Cidade" />
+        	<p:inputText value="#{obraBean.obra.cidade}" />
+        </div>
+        
+		<p:outputLabel for="contratante" value="Contratante" style="display:block; margin-bottom:5px;" />
+
+		<p:selectOneMenu id="contratante" value="#{obraBean.obra.contratante}" converter="contratanteConverter" required="true"
+                 label="Contratante" style="width:310px; height:40px;">
+    		<f:selectItem itemLabel="Selecione o Contratante" itemValue="#{null}" noSelectionOption="true" />
+    		<f:selectItems value="#{obraBean.contratantes}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+		</p:selectOneMenu>
+					
+        <br/><br/>
+        <p:commandButton value="Salvar" action="#{obraBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
+
+    </h:form>
+
+</p:dialog>
 	
 	</ui:composition>
 

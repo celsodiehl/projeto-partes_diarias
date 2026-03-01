@@ -44,7 +44,7 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel />
-					<p:commandButton value="Cadastrar"	action="#{veiculoBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />
+					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{veiculoBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />
 
 				</p:panelGrid>
 
