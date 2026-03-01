@@ -3,6 +3,7 @@ package br.com.projeto.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.primefaces.model.DualListModel;
 
@@ -105,6 +106,24 @@ public class ContratoBean implements Serializable {
 		} catch (NegocioException e) {
 			Message.erro(e.getMessage());
 		}
+	}
+	
+	//MÉTODO PARA ORGANIZAR OS VEICULOS NO DIALOG
+	public void prepararEdicao(Contrato contratoSelecionado) {
+
+	    this.contrato = contratoSelecionado;
+
+	    // Todos os veículos do sistema
+	    List<Veiculo> todosVeiculos = veiculoService.todos();
+
+	    // Veículos que já pertencem ao contrato
+	    List<Veiculo> veiculosContrato = contrato.getVeiculos().stream().map(cv -> cv.getVeiculo()).collect(Collectors.toList());
+	    // Remove da lista geral os que já estão no contrato
+	    todosVeiculos.removeAll(veiculosContrato);
+
+	    // source = esquerda
+	    // target = direita
+	    dualVeiculos = new DualListModel<>(todosVeiculos, veiculosContrato);
 	}
 
 	public Contrato getContrato() {

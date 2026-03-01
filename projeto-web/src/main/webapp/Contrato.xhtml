@@ -113,7 +113,7 @@
 
 	</h:form>
 	
-		<!-- DATATABLE COM TODOS CONTRATANTES-->
+		<!-- DATATABLE COM TODOS CONTRATOS-->
 		<h:form>
 			<p:dataTable value="#{contratoBean.contratos}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			
@@ -143,17 +143,16 @@
 				<p:outputLabel value="#{obj.tipocontrato}" />
 			</p:column>
 			
-			<p:column headerText="Valor Contrato">
+			<p:column headerText="R$ Contrato">
     			<p:outputLabel value="#{obj.valor}">
         			<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR"/>
     			</p:outputLabel>
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update=":formDialog" process="@this" oncomplete="PF('dlgContratante').show()" 
-					style="margin-top: 10px" width="100">
-					<f:setPropertyActionListener value="#{obj}" target="#{contratoBean.contrato}" />
-				</p:commandButton>
+			<p:commandButton icon="pi pi-pencil"
+    			styleClass="p-button-rounded p-button-info" style="margin-top: 10px" process="@this" update=":formDialog" 
+    			actionListener="#{contratoBean.prepararEdicao(obj)}" oncomplete="PF('dlgEditar').show()" />
 				
 				<p:commandButton icon="pi pi-trash" styleClass="p-button-rounded p-button-danger" process="@this" oncomplete="PF('dlgConfirmExcluir').show()" 
 				update=":tabela :formCadastro">
@@ -163,17 +162,17 @@
 			
 			</p:dataTable>
 			
-	</h:form>
+	</h:form> <!-- DATATABLE -->
 	
 	<!-- DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
 	<p:dialog header="Confirmação" widgetVar="dlgConfirmExcluir" modal="true" closable="false" width="350" showEffect="fade" hideEffect="fade">
 
     	<h:form id="formExcluir" >
 
-        	<h:outputText value="Deseja realmente excluir este contratante?" />
+        	<h:outputText value="Deseja realmente excluir este contrato?" />
         	<br/><br/>
 
-        	<p:commandButton value="Sim" icon="pi pi-check" styleClass="ui-button-danger" action="#{contratanteBean.excluir}"
+        	<p:commandButton value="Sim" icon="pi pi-check" styleClass="ui-button-danger" action="#{contratoBean.excluir}"
                          update=":tabela :formCadastro" oncomplete="PF('dlgConfirmExcluir').hide()" />
 
         	<p:commandButton value="Não" icon="pi pi-times" type="button" onclick="PF('dlgConfirmExcluir').hide()" />
@@ -183,38 +182,73 @@
 </p:dialog>
 	
 	<!-- DIALOG DE EDIÇÃO-->
-	<p:dialog header="Editar Contratante" widgetVar="dlgContratante" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+	<p:dialog header="Editar Contrato" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="590">
 
     <h:form id="formDialog">
 
 		<div class="field">
         	<p:outputLabel value="Nome" />
-        	<p:inputText value="#{contratanteBean.contratante.nome}" />
+        	<p:inputText value="#{contratoBean.contrato.nome}" />
         </div>
         
-        <div class="field">
-        	<p:outputLabel value="CNPJ" />
-        <br/>
-			<p:inputMask id="cnpj" mask="99.999.999.9999-99" size="18" value="#{contratanteBean.contratante.cnpj}" required="true"/>
-        </div>
+        <p:outputLabel for="contratado" value="Contratado" style="display:block; margin-bottom:5px;" />
+		<p:selectOneMenu id="contratado" value="#{contratoBean.contrato.contratado}" converter="contratadoConverter" required="true"
+                 label="Contratado" style="width:310px; height:40px;">
+    		<f:selectItem itemLabel="Selecione o Contratado" itemValue="#{null}" noSelectionOption="true" />
+    		<f:selectItems value="#{contratoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+		</p:selectOneMenu>
+					
+        <br/><br/>
         
         <div class="field">
-        	<p:outputLabel value="Cidade" />
-        	<p:inputText value="#{contratanteBean.contratante.cidade}" />
+			<p:outputLabel value="Veículos" />
+			<br/>
+    			<ui:repeat value="#{contratoBean.contrato.veiculos}" var="cv" varStatus="status">
+       			 	#{cv.veiculo.modelo}#{!status.last ? ', ' : ''}
+   				</ui:repeat>
+   				<br/>
+   				<p:outputLabel value="Selecione o Veiculo(s)" />
+				<p:pickList value="#{contratoBean.dualVeiculos}" var="v" itemLabel="#{v.modelo}" itemValue="#{v}"
+            		converter="veiculoConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" />
+   				
         </div>
         
-        <div class="field">
-        	<p:outputLabel value="Contato" />
-        	<p:inputText value="#{contratanteBean.contratante.contato}" />
-        </div>
-        
-        <div class="field">
-        	<p:outputLabel value="Telefone" />
-        	<p:inputMask id="telefone" mask="99 9 9999-9999" value="#{contratanteBean.contratante.telefone}" />
-		</div>
-        <br/>
+		<p:panelGrid columns="4" style="width:100%" columnClasses="label,value,label,value">
 
-        <p:commandButton value="Salvar" action="#{contratanteBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgContratante').hide()" />
+    		<p:outputLabel for="dtInicio" value="Data Início" />
+    		<p:datePicker id="dtInicio" value="#{contratoBean.contrato.datainicio}"  pattern="dd/MM/yyyy" />
+
+    		<p:outputLabel for="dtFim" value="Encerramento" />
+    		<p:datePicker id="dtFim" value="#{contratoBean.contrato.datafim}" pattern="dd/MM/yyyy" />
+
+		</p:panelGrid>
+        
+        <div class="field">
+        	<p:column styleClass="ui-grid-col-2">
+			     <p:selectOneRadio value="#{contratoBean.contrato.tipocontrato}" layout="lineDirection" required="true">
+			          <p:ajax update="painelValor" />
+			
+			          <f:selectItem itemLabel="Diária" itemValue="DIARIA" />
+			          <f:selectItem itemLabel="Mensal" itemValue="MENSAL" />
+			     </p:selectOneRadio>
+			 </p:column>
+			 
+			 <p:column styleClass="ui-grid-col-3">
+			
+			        <p:outputPanel id="painelValor" style="display:flex; align-items:center; gap:10px;">
+			
+			            <p:outputLabel rendered="#{not empty contratoBean.contrato.tipocontrato}"
+			                value="Valor #{contratoBean.contrato.tipocontrato == 'DIARIA' ? 'da Diária' : 'Mensal'}" />
+			
+			            <p:inputNumber id="valor" rendered="#{not empty contratoBean.contrato.tipocontrato}"
+			                value="#{contratoBean.contrato.valor}" decimalPlaces="2" required="true" label="Valor" style="width: 200px" />
+			
+			        </p:outputPanel>
+			
+			  </p:column>
+		</div>
+
+        <p:commandButton value="Salvar" action="#{contratoBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
 
     </h:form>
 

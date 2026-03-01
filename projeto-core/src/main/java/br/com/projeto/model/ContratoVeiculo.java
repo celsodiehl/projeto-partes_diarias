@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,11 +28,11 @@ public class ContratoVeiculo implements Serializable, Base {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "contrato_id", nullable = false)
+    @JoinColumn(name = "contrato_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_contrato"))
     private Contrato contrato;
 
     @ManyToOne
-    @JoinColumn(name = "veiculo_id", nullable = false)
+    @JoinColumn(name = "veiculo_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_veiculo"))
     private Veiculo veiculo;
 
     private LocalDate dataInicio;
