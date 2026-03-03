@@ -38,5 +38,6 @@ public class ContratoService implements Serializable{
 	public Contrato buscarPorId(Long id) {
 	    return dao.buscarPorId(Contrato.class, id);
 	}
+
 	
 }

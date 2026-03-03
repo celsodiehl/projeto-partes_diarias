@@ -56,6 +56,12 @@ import jakarta.persistence.Table;
 		public void setContratado(Contratado contratado) {
 			this.contratado = contratado;
 		}
+		public List<ContratoVeiculo> getVeiculos() {
+			return veiculos;
+		}
+		public void setVeiculos(List<ContratoVeiculo> veiculos) {
+			this.veiculos = veiculos;
+		}
 		public String getNome() {
 			return nome;
 		}
@@ -93,12 +99,23 @@ import jakarta.persistence.Table;
 			this.valor = valor;
 		}
 		
-		public List<ContratoVeiculo> getVeiculos() {
-			return veiculos;
+		public void adicionarVeiculo(Veiculo veiculo) {
+
+		    if (!veiculo.getContratado().getId()
+		            .equals(this.contratado.getId())) {
+
+		        throw new IllegalStateException(
+		            "Veículo não pertence ao contratado deste contrato."
+		        );
+		    }
+
+		    ContratoVeiculo cv = new ContratoVeiculo();
+		    cv.setContrato(this);
+		    cv.setVeiculo(veiculo);
+
+		    this.veiculos.add(cv);
 		}
-		public void setVeiculos(List<ContratoVeiculo> veiculos) {
-			this.veiculos = veiculos;
-		}
+		
 		@Override
 		public int hashCode() {
 			return Objects.hash(id);

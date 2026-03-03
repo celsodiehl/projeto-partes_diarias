@@ -73,6 +73,11 @@ public class ContratoBean implements Serializable {
 			// percorre veículos selecionados do picklist
 			for (Veiculo v : dualVeiculos.getTarget()) {
 
+				if (!v.getContratado().getId().equals(contrato.getContratado().getId())) {
+
+					throw new NegocioException("Veículo não pertence ao contratado selecionado.");
+				}
+
 				ContratoVeiculo cv = new ContratoVeiculo();
 				cv.setContrato(contrato);
 				cv.setVeiculo(v);
@@ -107,23 +112,24 @@ public class ContratoBean implements Serializable {
 			Message.erro(e.getMessage());
 		}
 	}
-	
-	//MÉTODO PARA ORGANIZAR OS VEICULOS NO DIALOG
+
+	// MÉTODO PARA ORGANIZAR OS VEICULOS NO DIALOG
 	public void prepararEdicao(Contrato contratoSelecionado) {
 
-	    this.contrato = contratoSelecionado;
+		this.contrato = contratoSelecionado;
 
-	    // Todos os veículos do sistema
-	    List<Veiculo> todosVeiculos = veiculoService.todos();
+		// Todos os veículos do sistema
+		List<Veiculo> todosVeiculos = veiculoService.todos();
 
-	    // Veículos que já pertencem ao contrato
-	    List<Veiculo> veiculosContrato = contrato.getVeiculos().stream().map(cv -> cv.getVeiculo()).collect(Collectors.toList());
-	    // Remove da lista geral os que já estão no contrato
-	    todosVeiculos.removeAll(veiculosContrato);
+		// Veículos que já pertencem ao contrato
+		List<Veiculo> veiculosContrato = contrato.getVeiculos().stream().map(cv -> cv.getVeiculo())
+				.collect(Collectors.toList());
+		// Remove da lista geral os que já estão no contrato
+		todosVeiculos.removeAll(veiculosContrato);
 
-	    // source = esquerda
-	    // target = direita
-	    dualVeiculos = new DualListModel<>(todosVeiculos, veiculosContrato);
+		// source = esquerda
+		// target = direita
+		dualVeiculos = new DualListModel<>(todosVeiculos, veiculosContrato);
 	}
 
 	public Contrato getContrato() {
@@ -159,6 +165,19 @@ public class ContratoBean implements Serializable {
 
 	public void setDualVeiculos(DualListModel<Veiculo> dualVeiculos) {
 		this.dualVeiculos = dualVeiculos;
+	}
+
+	// AO SELECIONAR CONTRATADO SÓ BUSCA VEICULOS DELE
+	public void onContratadoChange() {
+
+		if (contrato.getContratado() == null) {
+			dualVeiculos = new DualListModel<>(new ArrayList<>(), new ArrayList<>());
+			return;
+		}
+
+		List<Veiculo> veiculos = veiculoService.buscarPorContratado(contrato.getContratado());
+
+		dualVeiculos = new DualListModel<>(new ArrayList<>(veiculos), new ArrayList<>());
 	}
 
 }

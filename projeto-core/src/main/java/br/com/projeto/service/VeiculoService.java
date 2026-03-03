@@ -7,6 +7,7 @@ import java.util.Map;
 
 import br.com.projeto.dao.DAO;
 import br.com.projeto.exception.NegocioException;
+import br.com.projeto.model.Contratado;
 import br.com.projeto.model.Veiculo;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -59,6 +60,17 @@ public class VeiculoService implements Serializable {
 
 	    Map<String, Object> params = new HashMap<>();
 	    params.put("idContrato", idContrato);
+
+	    return dao.buscarComParametros(Veiculo.class, jpql, params);
+	}
+	
+	//SÒ BUSCAR VEICULOS DAQUELE CONTRATADO
+	public List<Veiculo> buscarPorContratado(Contratado contratado) {
+
+	    String jpql = "SELECT v FROM Veiculo v WHERE v.contratado = :contratado";
+
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("contratado", contratado);
 
 	    return dao.buscarComParametros(Veiculo.class, jpql, params);
 	}
