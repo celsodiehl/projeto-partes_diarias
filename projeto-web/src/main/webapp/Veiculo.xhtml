@@ -109,23 +109,23 @@
         </div>
         
         <p:outputLabel for="marca" value="Marca" style="display:block; margin-bottom:5px;" />
-		<p:selectOneMenu id="marca" value="#{veiculoBean.veiculo.marca.nome}" converter="marcaConverter" required="true"
+		<p:selectOneMenu id="marca" value="#{veiculoBean.veiculo.marca}" converter="marcaConverter" required="true"
                  label="Marca" style="width:310px; height:40px;">
     		<f:selectItem itemLabel="Selecione a Marca" itemValue="#{null}" noSelectionOption="true" />
     		<f:selectItems value="#{veiculoBean.marcas}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
 		</p:selectOneMenu>
 		<br/>
         <br/>
-        <p:outputLabel for="proprietario" value="Proprietário" style="display:block; margin-bottom:5px;" />
-		<p:selectOneMenu id="proprietario" value="#{veiculoBean.veiculo.contratado.nome}" converter="contratadoConverter" required="true"
-                 label="Proprietário" style="width:310px; height:40px;">
-    		<f:selectItem itemLabel="Selecione o Proprietário" itemValue="#{null}" noSelectionOption="true" />
+		<p:outputLabel for="contratado" value="Prorietário" style="display:block; margin-bottom:5px;" />
+		<p:selectOneMenu id="contratado" value="#{veiculoBean.veiculo.contratado}" converter="contratadoConverter" required="true"
+                 label="Contratado" style="width:310px; height:40px;">
+    		<f:selectItem itemLabel="Selecione o Prorietário" itemValue="#{null}" noSelectionOption="true" />
     		<f:selectItems value="#{veiculoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
 		</p:selectOneMenu>
 		<br/>
 		<br/>
         <p:outputLabel for="motorista" value="Motorista" style="display:block; margin-bottom:5px;" />
-		<p:selectOneMenu id="motorista" value="#{veiculoBean.veiculo.motorista.nome}" converter="motoristaConverter" required="true"
+		<p:selectOneMenu id="motorista" value="#{veiculoBean.veiculo.motorista}" converter="motoristaConverter" required="true"
                  label="Motorista" style="width:310px; height:40px;">
     		<f:selectItem itemLabel="Selecione o Motorista" itemValue="#{null}" noSelectionOption="true" />
     		<f:selectItems value="#{veiculoBean.motoristas}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />

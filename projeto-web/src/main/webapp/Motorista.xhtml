@@ -11,7 +11,7 @@
 		
 <h1>Cadastro de Motorista / Operador</h1>
 
-<h:form id="frm">
+<h:form id="formCadastro">
 		
 		<p:panel style="margin-top: 10px">
 		<p:messages autoUpdate="true" />
@@ -26,7 +26,7 @@
 				<p:inputText size="30" value="#{motoristaBean.motorista.categoria}"	required="true" label="Categoria" />
 					
 				<p:outputLabel />
-				<p:commandButton value="Cadastrar" action="#{motoristaBean.adicionar}" update="frm tabela" style="margin-top: 10px; width: 290px; height: 40px;"/>	
+				<p:commandButton value="Cadastrar" action="#{motoristaBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;"/>	
 			
 			</p:panelGrid>
 			
@@ -35,8 +35,9 @@
 		</p:panel>
 	</h:form>
 			
+	<!-- DATA TABLE COM TODOS MOTORISTAS -->
 	<h:form>
-			<p:dataTable value="#{motoristaBean.motoristas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
+		<p:dataTable value="#{motoristaBean.motoristas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			
 			<p:column headerText="Motorista">
 				<p:outputLabel value="#{obj.nome}" />
@@ -47,7 +48,7 @@
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update="@form" process="@this" style="margin-top: 10px" width="100">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" process="@this" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{motoristaBean.motorista}" />
 				</p:commandButton>
 				
@@ -56,8 +57,31 @@
 				</p:commandButton>
 			</p:column>
 			
-			</p:dataTable>
+		</p:dataTable>
 	</h:form>
+	
+	<!-- DIALOG DE EDIÇÃO-->
+	<p:dialog header="Editar Motorista" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+
+    <h:form id="formDialog">
+
+		<div class="field">
+        	<p:outputLabel value="Motorista" />
+        	<p:inputText value="#{motoristaBean.motorista.nome}" />
+        </div>
+        
+        <div class="field">
+        	<p:outputLabel value="Categoria" />
+        <br/>
+			<p:inputText size="8" value="#{motoristaBean.motorista.categoria}" required="true"/>
+        </div>
+        <br/>
+        
+        <p:commandButton value="Salvar" action="#{motoristaBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
+
+    </h:form>
+
+</p:dialog>
 	
 	</ui:composition>
 

@@ -67,20 +67,21 @@
                 <p:inputText id="motorista" value="#{parteDiariaBean.ptdia.veiculo.motorista.nome}" readonly="true" />
             </p:column>
             
-            <!-- TESTANDO -->
-			 <p:column styleClass="ui-grid-col-2">
-			
-			        <p:outputPanel id="painelValor" style="display:flex; align-items:center; width: 450px">
-			
-			            <p:outputLabel rendered="#{not empty parteDiariaBean.ptdia.contrato.tipocontrato}"
-			                value="Valor #{parteDiariaBean.ptdia.contrato.tipocontrato == 'DIARIA' ? 'da Diária' : 'Mensal'}" />
-			
-			            <p:inputNumber id="valor" rendered="#{not empty parteDiariaBean.ptdia.contrato.tipocontrato}"
-			                value="#{parteDiariaBean.ptdia.contrato.valor}" decimalPlaces="2" required="true" label="Valor" style="width: 200px" />
-			
-			       </p:outputPanel>
-			
-			  </p:column>
+            <!-- Valor de Contrato -->
+			<p:column styleClass="ui-grid-col-2">
+
+    			<p:outputPanel id="painelValor">
+
+        			<p:outputLabel for="valor"
+            			rendered="#{not empty parteDiariaBean.ptdia.contrato.tipocontrato}"
+            			value="Valor #{parteDiariaBean.ptdia.contrato.tipocontrato == 'DIARIA' ? 'da Diária' : 'Mensal'}" />
+
+        			<p:inputNumber id="valor" rendered="#{not empty parteDiariaBean.ptdia.contrato.tipocontrato}"
+            			value="#{parteDiariaBean.ptdia.contrato.valor}"	decimalPlaces="2" required="true" label="Valor"	style="width:100%" readonly="true" />
+
+   				 </p:outputPanel>
+
+			</p:column>
             
 			 <p:column styleClass="ui-grid-col-2">
 			     <p:outputLabel for="data" value="Data" />
