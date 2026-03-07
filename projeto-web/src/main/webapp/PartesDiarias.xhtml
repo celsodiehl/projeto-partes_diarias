@@ -14,7 +14,7 @@
 
 		<p:messages id="messages" closable="true" />
 
-	    <!-- FORMULARIO DE CADASTRO-->
+<!-- FORMULARIO DE CADASTRO-->
 <div class="ui-fluid form-compacto">
 
     <p:panelGrid layout="grid" style="margin-top: 20px">
@@ -47,9 +47,9 @@
             <p:column styleClass="ui-grid-col-2">
                 <p:outputLabel value="Contrato" />
 				<p:selectOneMenu value="#{parteDiariaBean.ptdia.contrato}" converter="contratoConverter" required="true" label="Contratado"	style="width: 240px; height: 30px;">
-					<f:selectItem itemLabel="Selecione um Contratado" noSelectionOption="true" />
+					<f:selectItem itemLabel="Selecione um Contrato" noSelectionOption="true" />
 					<f:selectItems value="#{parteDiariaBean.contratos}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
-					<p:ajax listener="#{parteDiariaBean.carregarVeiculos}" update="veiculo" resetValues="true" />
+					<p:ajax listener="#{parteDiariaBean.carregarVeiculos}" update="veiculo valor painelValor" resetValues="true" />
 			</p:selectOneMenu>
             </p:column>
 
@@ -67,7 +67,22 @@
                 <p:inputText id="motorista" value="#{parteDiariaBean.ptdia.veiculo.motorista.nome}" readonly="true" />
             </p:column>
             
-			<p:column styleClass="ui-grid-col-2">
+            <!-- TESTANDO -->
+			 <p:column styleClass="ui-grid-col-2">
+			
+			        <p:outputPanel id="painelValor" style="display:flex; align-items:center; width: 450px">
+			
+			            <p:outputLabel rendered="#{not empty parteDiariaBean.ptdia.contrato.tipocontrato}"
+			                value="Valor #{parteDiariaBean.ptdia.contrato.tipocontrato == 'DIARIA' ? 'da Diária' : 'Mensal'}" />
+			
+			            <p:inputNumber id="valor" rendered="#{not empty parteDiariaBean.ptdia.contrato.tipocontrato}"
+			                value="#{parteDiariaBean.ptdia.contrato.valor}" decimalPlaces="2" required="true" label="Valor" style="width: 200px" />
+			
+			       </p:outputPanel>
+			
+			  </p:column>
+            
+			 <p:column styleClass="ui-grid-col-2">
 			     <p:outputLabel for="data" value="Data" />
 				  <p:datePicker id="data" value="#{parteDiariaBean.ptdia.data}" pattern="dd/MM/yyyy" showIcon="true" required="true" label="Data"/>
 			 </p:column>
