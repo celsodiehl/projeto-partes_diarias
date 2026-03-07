@@ -9,51 +9,36 @@
 
 	<aside class="west">
 
-		<p:panelMenu styleClass="side-menu" multiple="true">
-			<p:submenu label="Home" icon="pi pi-home" outcome="/index">
+		<p:panelMenu styleClass="side-menu" multiple="false" stateful="true">
+			<p:submenu label="Home" icon="pi pi-home">
 				<p:menuitem value="Home" icon="pi pi-home" outcome="/index" />
 			</p:submenu>
 			
-			<p:submenu label="Contratante">
-				<p:menuitem value="Todos" outcome="Contratante" />
-			</p:submenu>
+			<p:submenu label="Cadastros" icon="pi pi-building">
+                <p:menuitem value="Empresa" icon="pi pi-building" outcome="Empresa?faces-redirect=true"/>
+                <p:menuitem value="Contratantes" icon="pi pi-list" outcome="Contratante?faces-redirect=true"/>
+                <p:menuitem value="Contratados" icon="pi pi-users" outcome="Contratado?faces-redirect=true"/>
+            </p:submenu>
 			
-			<p:submenu label="Obra">
-				<p:menuitem value="Obras" outcome="Obra" />
-			</p:submenu>
-			
-			<p:submenu label="Contratado">
-				<p:menuitem value="Contratados" outcome="Contratado" />
-			</p:submenu>
-			
-			<p:submenu label="Contrato">
-				<p:menuitem value="Contratos" outcome="Contrato" />
-			</p:submenu>
+            <p:submenu label="Operações" icon="pi pi-briefcase">
+                <p:menuitem value="Obras" icon="pi pi-list" outcome="Obra"/>
+                <p:menuitem value="Contratos" icon="pi pi-list" outcome="Contrato?faces-redirect=true"/>
+                <p:menuitem value="Serviços" icon="pi pi-wrench" outcome="Servico?faces-redirect=true"/>
+            </p:submenu>
+            
+            <p:submenu label="Marcas" icon="pi pi-tag">
+                <p:menuitem value="Marcas" icon="pi pi-tags" outcome="Marca?faces-redirect=true"/>
+            </p:submenu>
 
-			<p:submenu label="Serviços">
-				<p:menuitem value="Serviços" outcome="Servico" />
-			</p:submenu>
+            <p:submenu label="Frota" icon="pi pi-car">
+                <p:menuitem value="Motoristas" icon="pi pi-users" outcome="Motorista?faces-redirect=true"/>
+                <p:menuitem value="Veículos" icon="pi pi-car" outcome="Veiculo?faces-redirect=true"/>
+            </p:submenu>
 
-			<p:submenu label="Motoristas">
-				<p:menuitem value="Motoristas" outcome="Motorista" />
-			</p:submenu>
-
-			<p:submenu label="Marcas">
-				<p:menuitem value="Marcas" outcome="Marca" />
-			</p:submenu>
-
-			<p:submenu label="Veiculos">
-				<p:menuitem value="Veiculos" outcome="Veiculo" />
-			</p:submenu>
-
-			<p:submenu label="Partes Diárias" icon="pi pi-users" expanded="true">
-				<p:menuitem value="Todas" outcome="PartesDiarias" />
-				<p:menuitem value="Relatórios" outcome="PartesDiarias" />
-			</p:submenu>
-			
-			<p:submenu label="Empresa">
-				<p:menuitem value="Empresa" outcome="Empresa" />
-			</p:submenu>
+            <p:submenu label="Partes Diárias" icon="pi pi-calendar">
+                <p:menuitem value="Todas" icon="pi pi-list" outcome="PartesDiarias?faces-redirect=true"/>
+                <p:menuitem value="Relatórios" icon="pi pi-chart-bar" outcome="PartesDiarias?faces-redirect=true"/>
+            </p:submenu>
 
 		</p:panelMenu>
 

@@ -36,7 +36,7 @@
 	</h:form>
 			
 	<h:form>
-			<p:dataTable value="#{motoristaBean.motoristas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">>
+			<p:dataTable value="#{motoristaBean.motoristas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			
 			<p:column headerText="Motorista">
 				<p:outputLabel value="#{obj.nome}" />
@@ -47,7 +47,7 @@
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update="@form" process="@this" style="margin-top: 10px" width="100">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update="@form" process="@this" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{motoristaBean.motorista}" />
 				</p:commandButton>
 				

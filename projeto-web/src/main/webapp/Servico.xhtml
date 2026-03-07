@@ -34,14 +34,14 @@
 			
 	<!-- DATATABLE COM TODOS SERVIÇOS-->
 	<h:form>
-			<p:dataTable value="#{servicoBean.servicos}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">>
+			<p:dataTable value="#{servicoBean.servicos}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			
 			<p:column headerText="Servico">
 				<p:outputLabel value="#{obj.nome}" />
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info" update=":formDialog" oncomplete="PF('dlgEditar').show()"  style="margin-top: 10px" width="100">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" oncomplete="PF('dlgEditar').show()"  style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{servicoBean.servico}" />
 				</p:commandButton>
 				

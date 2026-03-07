@@ -10,7 +10,72 @@
 		<ui:define name="titulo">Cadastro de Empresa</ui:define>
 		<h1>Cadastro de Empresa</h1>
 		
+	<h:form id="formCadastro">
 
+		<p:panel style="margin-top: 10px">
+			<p:messages autoUpdate="true" />
+
+			<div class="ui-fluid">
+				<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin-top: 20px">
+
+					<p:outputLabel value="Nome" />
+					<p:inputText size="30" value="#{empresaBean.empresa.nome}" required="true" label="Nome" />
+					
+					<p:outputLabel value="CNPJ" />
+					<p:inputText size="30" value="#{empresaBean.empresa.cnpj}" required="true" label="CNPJ" />
+
+					<p:outputLabel />
+					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{empresaBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />
+
+				</p:panelGrid>
+
+			</div>
+
+		</p:panel>
+		
+	</h:form>
+	
+	<!-- DATATABLE COM TODAS EMPRESAS-->
+	<h:form>
+		<p:dataTable value="#{empresaBean.empresas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
+			
+			<p:column headerText="Empresa">
+				<p:outputLabel value="#{obj.nome}" />
+			</p:column>
+			
+			<p:column headerText="Empresa">
+				<p:outputLabel value="#{obj.cnpj}" />
+			</p:column>
+			
+			<p:column headerText="Ações" width="500">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" oncomplete="PF('dlgEditar').show()"  style="margin-top: 10px; margin-right:10px;" width="100" >
+					<f:setPropertyActionListener value="#{obj}" target="#{empresaBean.empresa}" />
+				</p:commandButton>
+				
+				<p:commandButton action="#{empresaBean.excluir}" icon="pi pi-trash" update="tabela" process="@this" width="100">
+					<f:setPropertyActionListener value="#{obj}" target="#{empresaBean.empresa}"/>
+				</p:commandButton>
+			</p:column>
+			
+		</p:dataTable>
+	</h:form>
+	
+	<!-- DIALOG DE EDIÇÃO-->
+	<p:dialog header="Editar Empresa" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+
+    	<h:form id="formDialog">
+
+			<div class="field">
+        		<p:outputLabel value="Nome" />
+        		<p:inputText value="#{empresaBean.empresa.nome}" />
+        	</div>
+					
+        <br/><br/>
+        <p:commandButton value="Salvar" action="#{empresaBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
+
+    	</h:form>
+
+	</p:dialog>
 	
 	</ui:composition>
 

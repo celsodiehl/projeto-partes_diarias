@@ -150,8 +150,7 @@
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-			<p:commandButton icon="pi pi-pencil"
-    			styleClass="p-button-rounded p-button-info" style="margin-top: 10px" process="@this" update=":formDialog" 
+			<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" style="margin-top: 10px" process="@this" update=":formDialog" 
     			actionListener="#{contratoBean.prepararEdicao(obj)}" oncomplete="PF('dlgEditar').show()" />
 				
 				<p:commandButton icon="pi pi-trash" styleClass="p-button-rounded p-button-danger" process="@this" oncomplete="PF('dlgConfirmExcluir').show()" 
