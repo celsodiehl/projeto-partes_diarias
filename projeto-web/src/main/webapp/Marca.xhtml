@@ -11,7 +11,7 @@
 		
 <h1>Cadastro de Marcas</h1>
 
-<h:form id="frm">
+<h:form id="formCadastro">
 		
 		<p:panel style="margin-top: 10px">
 		<p:messages autoUpdate="true" />
@@ -23,7 +23,7 @@
 				<p:inputText size="30" value="#{marcaBean.marca.nome}"	required="true" label="Marca" />
 
 				<p:outputLabel />
-				<p:commandButton value="Cadastrar" action="#{marcaBean.adicionar}" update="frm tabela" style="margin-top: 10px; width: 290px; height: 40px;"/>	
+				<p:commandButton value="Cadastrar" action="#{marcaBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;"/>	
 			
 			</p:panelGrid>
 			
@@ -32,15 +32,16 @@
 		</p:panel>
 	</h:form>
 			
+	<!-- DATA TABLE COM TODAS MARCAS -->
 	<h:form>
-			<p:dataTable value="#{marcaBean.marcas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
+		<p:dataTable value="#{marcaBean.marcas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			
 			<p:column headerText="Marca">
 				<p:outputLabel value="#{obj.nome}" />
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update="@form" process="@this" style="margin-top: 10px" width="100">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" process="@this" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{marcaBean.marca}" />
 				</p:commandButton>
 				
@@ -49,8 +50,25 @@
 				</p:commandButton>
 			</p:column>
 			
-			</p:dataTable>
+		</p:dataTable>
 	</h:form>
+	
+<!-- DIALOG DE EDIÇÃO-->
+<p:dialog header="Editar Marca" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+
+    <h:form id="formDialog">
+
+		<div class="field">
+        	<p:outputLabel value="Marca" />
+        	<p:inputText value="#{marcaBean.marca.nome}" />
+        </div>
+        <br/>
+        
+        <p:commandButton value="Salvar" action="#{marcaBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
+
+    </h:form>
+
+</p:dialog>
 	
 	</ui:composition>
 
