@@ -92,7 +92,7 @@
 		</p:dataTable>
 	</h:form>
 	
-		<!-- DIALOG DE EDIÇÃO-->
+	<!-- DIALOG DE EDIÇÃO-->
 	<p:dialog header="Editar Veiculo" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
 
     <h:form id="formDialog">
@@ -108,22 +108,30 @@
 			<p:inputText size="8" value="#{veiculoBean.veiculo.placa}" required="true"/>
         </div>
         
-        <div class="field">
-        	<p:outputLabel value="Marca" />
-        	<p:inputText value="#{veiculoBean.veiculo.marca.nome}" />
-        </div>
-        
-        <div class="field">
-        	<p:outputLabel value="Proprietário" />
-        	<p:inputText value="#{veiculoBean.veiculo.contratado.nome}" />
-        </div>
-        
-       <div class="field">
-        	<p:outputLabel value="Motorista" />
-        	<p:inputText value="#{veiculoBean.veiculo.motorista.nome}" />
-        </div>
+        <p:outputLabel for="marca" value="Marca" style="display:block; margin-bottom:5px;" />
+		<p:selectOneMenu id="marca" value="#{veiculoBean.veiculo.marca.nome}" converter="marcaConverter" required="true"
+                 label="Marca" style="width:310px; height:40px;">
+    		<f:selectItem itemLabel="Selecione a Marca" itemValue="#{null}" noSelectionOption="true" />
+    		<f:selectItems value="#{veiculoBean.marcas}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+		</p:selectOneMenu>
+		<br/>
         <br/>
-
+        <p:outputLabel for="proprietario" value="Proprietário" style="display:block; margin-bottom:5px;" />
+		<p:selectOneMenu id="proprietario" value="#{veiculoBean.veiculo.contratado.nome}" converter="contratadoConverter" required="true"
+                 label="Proprietário" style="width:310px; height:40px;">
+    		<f:selectItem itemLabel="Selecione o Proprietário" itemValue="#{null}" noSelectionOption="true" />
+    		<f:selectItems value="#{veiculoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+		</p:selectOneMenu>
+		<br/>
+		<br/>
+        <p:outputLabel for="motorista" value="Motorista" style="display:block; margin-bottom:5px;" />
+		<p:selectOneMenu id="motorista" value="#{veiculoBean.veiculo.motorista.nome}" converter="motoristaConverter" required="true"
+                 label="Motorista" style="width:310px; height:40px;">
+    		<f:selectItem itemLabel="Selecione o Motorista" itemValue="#{null}" noSelectionOption="true" />
+    		<f:selectItems value="#{veiculoBean.motoristas}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+		</p:selectOneMenu>
+        <br/>
+        <br/>
         <p:commandButton value="Salvar" action="#{veiculoBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
 
     </h:form>
