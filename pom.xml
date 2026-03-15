@@ -11,7 +11,7 @@
   	<module>projeto-web</module>
   </modules>
   
-  	<!-- JAVASE-17-->
+  	<!-- JAVASE-17 - JakartaEE 10 -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.report.sourceEncoding>UTF-8</project.report.sourceEncoding>

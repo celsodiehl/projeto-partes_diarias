@@ -1,11 +1,14 @@
 package br.com.projeto.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.projeto.exception.NegocioException;
 import br.com.projeto.model.Empresa;
 import br.com.projeto.service.EmpresaService;
+import br.com.projeto.util.UtilRelatorios;
 import br.com.projeto.utility.Message;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -51,6 +54,18 @@ public class EmpresaBean implements Serializable {
 				Message.info(empresa.getNome() + " Removido Com Sucesso!");
 			} catch (NegocioException e) {
 				Message.erro(e.getMessage());
+			}
+		}
+		
+		//EMPRESA
+		public void imprimeEmpresa() {
+			try {
+				List<Empresa> lista = new ArrayList<>();
+				lista.add(empresa);
+				HashMap parametros = new HashMap();
+				UtilRelatorios.imprimeRelatorio("Empresa", parametros, lista);
+			} catch (Exception e) {
+				Message.info("Erro ao Imprimir: "  + e.getMessage());
 			}
 		}
 

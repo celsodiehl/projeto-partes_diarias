@@ -12,11 +12,8 @@ public class DAO<T extends Base> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	//COMENTEI PELO CAHT
-	//private static EntityManager manager = ConnectionFactory.getEntityManager();
 	private EntityManager manager = ConnectionFactory.getEntityManager();
 
-	
 	public T buscarPorId(Class<T> clazz, Long id) {
 		return manager.find(clazz, id);
 	}

@@ -8,23 +8,11 @@ import br.com.projeto.exception.NegocioException;
 import br.com.projeto.model.Contratado;
 import jakarta.enterprise.context.ApplicationScoped;
 
-@ApplicationScoped // ALTEREI CHAT
+@ApplicationScoped
 public class ContratadoService implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	/* ALTEREI AKI CHAT
-	@PersistenceContext
-	private EntityManager em;
-
-	public Contratado find(Long id) {
-		return em.find(Contratado.class, id);
-	} */
-	
-	
-	//@Inject
-	//private DAO<Contratado> dao;
-	//CHAT
 	private DAO<Contratado> dao = new DAO<>();
 	
 	public void salvar(Contratado obj) throws NegocioException {
@@ -45,4 +33,6 @@ public class ContratadoService implements Serializable{
 	public Contratado buscarPorId(Long id) {
 	    return dao.buscarPorId(Contratado.class, id);
 	}
+	
+	
 }

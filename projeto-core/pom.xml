@@ -14,7 +14,7 @@
 
 	<dependencies>
 
-		<!-- ÈSSA DEPENDENCIA É PQ MEU PROJETO USA ENTITYMANAGER-->
+		<!-- ESSA DEPENDENCIA É PQ MEU PROJETO USA ENTITYMANAGER-->
 		<dependency>
 			<groupId>jakarta.persistence</groupId>
 			<artifactId>jakarta.persistence-api</artifactId>

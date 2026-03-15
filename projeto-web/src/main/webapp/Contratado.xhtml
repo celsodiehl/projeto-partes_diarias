@@ -9,37 +9,64 @@
 
 	<ui:define name="titulo">Cadastro de Contratados</ui:define>
 	<h1>Cadastro de Contratados / Prestador de Serviços</h1>
-
-	<h:form id="formCadastro">
-		
-		<p:panel style="margin-top: 10px">
-		<p:messages autoUpdate="true" />
-
-	<!-- FORMULARIO DE CADASTRO-->
-	<div class="ui-fluid">
-			<p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin-top: 20px">
-
-				<p:outputLabel value="Nome.:" />
-				<p:inputText size="30" value="#{contratadoBean.contratado.nome}"	required="true" label="Contratado" />
-
-				<p:outputLabel value="CNPJ" />
-				<p:inputMask mask="99.999.999.9999-99" size="18" value="#{contratadoBean.contratado.cnpj}" required="true" label="CNPJ"/>
-					
-				<p:outputLabel />
-				<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{contatadoBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />	
-			
-			</p:panelGrid>
-			
-		</div>
-			
-		</p:panel>
-	</h:form>
-			
 	
-	<!-- DATATABLE COM TODOS CONTRATADOS-->
-	<h:form>
+  <!-- BARRA DE IMPRIMIR -->
+<h:form id="formRelatorio">
+ 
+  <div class="card">
+
+	<p:toolbar style="margin-top: 20px">
+		
+		<p:toolbarGroup>
+			<p:commandButton value="Imprimir" icon="pi pi-print" styleClass="mr-2" action="#{contratadoBean.imprimeContratados}" process="@this" ajax="false" onclick="this.form.target = '_blank';" />
+		</p:toolbarGroup>
+		
+		<p:toolbarGroup align="right">
+				<p:button icon="pi pi-search" value="Pesquisar"	styleClass="ui-button-warning" />
+		</p:toolbarGroup>
+				
+	</p:toolbar>
+
+  </div>
+
+</h:form>
+
+<h:form id="formCadastro">
+
+    <p:messages autoUpdate="true"/>
+
+    <div class="ui-fluid">
+
+        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin-top: 20px">
+
+            <p:outputLabel value="Nome:" />
+            <p:inputText value="#{contratadoBean.contratado.nome}" required="true" label="Contratado"/>
+
+            <p:outputLabel value="CNPJ" />
+            <p:inputMask mask="99.999.999.9999-99" value="#{contratadoBean.contratado.cnpj}" required="true" label="CNPJ"/>
+            
+        </p:panelGrid>
+      
+   </div>
+            
+  <div class="card">
+
+	 <p:toolbar style="margin-top: 20px">
+		
+		 <p:toolbarGroup>
+			<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{contratadoBean.adicionar}" update=":formCadastro:messages :formCadastro" />
+		 </p:toolbarGroup>
+				
+	  </p:toolbar>
+
+  </div>
+  
+</h:form>
+	
+<!-- DATATABLE COM TODOS CONTRATADOS-->
+<h:form>
 	    <p:dataTable value="#{contratadoBean.contratados}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
-			
+
 			<p:column headerText="Contratado">
 				<p:outputLabel value="#{obj.nome}" />
 			</p:column>
@@ -52,15 +79,19 @@
 				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{contratadoBean.contratado}" />
 				</p:commandButton>
-				
-				<p:commandButton icon="pi pi-trash" update="tabela" process="@this" width="100">
+							
+				<p:commandButton icon="pi pi-trash" styleClass="p-button-rounded p-button-info mr-2" update="tabela" process="@this" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{contratadoBean.contratado}"/>
 				</p:commandButton>
+
+				<!-- NÃO FUNCIONA BEM CERTO -->
+				<p:commandButton value="Imprimir" icon="pi pi-print" styleClass="mr-2" actionListener="#{contratadoBean.imprimeContratado}" ajax="false" onclick="this.form.target = '_blank';" />
+				
 			</p:column>
 			
 	    </p:dataTable>
 	
-	</h:form>
+</h:form>
 	
 	<!-- DIALOG DE EDIÇÃO-->
 	<p:dialog header="Editar Contratados" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">

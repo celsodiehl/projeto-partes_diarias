@@ -62,8 +62,8 @@
         		<p:outputLabel value="Nome" />
         		<p:inputText value="#{servicoBean.servico.nome}" />
         	</div>
-					
-        <br/><br/>
+            <br/>
+        
         <p:commandButton value="Salvar" action="#{servicoBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
 
     	</h:form>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relContratado" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8c296c9f-400c-4e83-b2da-99aa7fbd3798">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DadosProjeto.xml"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="zebra">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#B1FCF4"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="veiculos" class="java.util.List">
+		<fieldDescription><![CDATA[veiculos]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[nome]]></fieldDescription>
+	</field>
+	<field name="cnpj" class="java.lang.String">
+		<fieldDescription><![CDATA[cnpj]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="20" width="330" height="30" uuid="555c873a-728e-4ea8-b567-51a33284cbe9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Contratados / Prestadores de Serviços]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="26">
+			<staticText>
+				<reportElement x="1" y="0" width="42" height="26" uuid="81356ac0-02e6-42a8-a462-8676a6583482">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9a4295ad-81d8-46aa-ab02-74eb44ff8517"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="0" width="100" height="26" uuid="ab232e13-019d-4328-925b-0829d74ae4da">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="159d438b-3f38-4eb5-b06c-44339a95c57d"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="100" height="26" uuid="53227e51-feb1-4173-a1d2-d1d01b1e73a9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78140c36-a19c-4ddf-8dd5-59b3208efdaf"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[CNPJ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<rectangle>
+				<reportElement style="zebra" x="0" y="0" width="542" height="25" uuid="5e10aca6-ed2d-4857-81ca-e4e7abb0fedb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+			</rectangle>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="24" width="552" height="25" uuid="6d856f47-26ec-40d4-91a4-210e6d2ca432">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(
+	(java.util.List<br.com.projeto.model.Veiculo>)$F{veiculos}
+)]]></dataSourceExpression>
+				<subreportExpression><![CDATA["subContratado.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="280" y="1" width="100" height="20" uuid="7c78f953-5bc3-43d0-b872-060d9b188621">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78140c36-a19c-4ddf-8dd5-59b3208efdaf"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="42" y="2" width="230" height="20" uuid="3f00cb26-30fe-4701-9b98-0ecb356e1a05">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="159d438b-3f38-4eb5-b06c-44339a95c57d"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-1" y="2" width="33" height="20" uuid="95d20f6c-875a-4cb8-aa4f-3111134e99d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9a4295ad-81d8-46aa-ab02-74eb44ff8517"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

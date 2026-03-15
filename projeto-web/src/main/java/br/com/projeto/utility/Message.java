@@ -23,4 +23,10 @@ public class Message {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	
+	public static void erroRelatorio(String text) {
+		
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, text, null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
 }
