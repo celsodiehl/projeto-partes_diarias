@@ -41,7 +41,7 @@
 	<detail>
 		<band height="80" splitType="Stretch">
 			<rectangle>
-				<reportElement style="zebra" x="0" y="30" width="530" height="22" uuid="5e10aca6-ed2d-4857-81ca-e4e7abb0fedb">
+				<reportElement mode="Transparent" x="0" y="30" width="530" height="22" isPrintInFirstWholeBand="true" forecolor="#000000" backcolor="#7BB7E8" uuid="5e10aca6-ed2d-4857-81ca-e4e7abb0fedb">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
