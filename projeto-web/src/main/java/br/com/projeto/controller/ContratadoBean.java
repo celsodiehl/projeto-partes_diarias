@@ -62,12 +62,6 @@ public class ContratadoBean implements Serializable {
 		UtilRelatorios.imprimeRelatorio("RelContratado", parametros, service.todos());
 	}
 	
-	//CHAT
-	//public void imprimeContratados() {
-	 //   List<Contratado> lista = service.todos(); // busca no DB
-	//    UtilRelatorios.imprimeRelatorio("RelContratado", new HashMap<>(), lista);
-	//}
-	
 	public void imprimeContratado() {
 		try {
 			//ob = service.buscarPorId(id);

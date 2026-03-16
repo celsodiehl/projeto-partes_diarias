@@ -18,69 +18,90 @@
 		<fieldDescription><![CDATA[placa]]></fieldDescription>
 	</field>
 	<columnHeader>
-		<band height="30" splitType="Stretch">
+		<band height="26" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle>
-				<reportElement x="0" y="-1" width="535" height="31" uuid="18d2797b-6cfa-4a70-8c1f-48ad1c9df49a"/>
+				<reportElement x="0" y="-1" width="530" height="22" uuid="18d2797b-6cfa-4a70-8c1f-48ad1c9df49a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="13" y="0" width="100" height="30" uuid="723c99ae-1642-470b-aa8c-818e40140109">
+				<reportElement x="13" y="0" width="100" height="22" uuid="723c99ae-1642-470b-aa8c-818e40140109">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0952977-ab3f-4be2-871a-f6693a5cd654"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Modelo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="182" y="0" width="98" height="30" uuid="af4432af-d0da-44fc-b980-d105f3b871e8">
+				<reportElement x="182" y="0" width="98" height="22" uuid="af4432af-d0da-44fc-b980-d105f3b871e8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="513aa021-fc14-485c-9939-e1e3c6de7830"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Placa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="282" y="0" width="88" height="30" uuid="1af1b19b-b641-422e-a4f9-c2a2a344ab0a">
+				<reportElement x="282" y="0" width="88" height="22" uuid="1af1b19b-b641-422e-a4f9-c2a2a344ab0a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc5fa07e-2f7b-470a-beb4-1e9d6b83faa8"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Marca]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="385" y="-1" width="105" height="30" uuid="a5e70072-337d-4061-9afa-4e38d04f4a13">
+				<reportElement x="385" y="-1" width="105" height="22" uuid="a5e70072-337d-4061-9afa-4e38d04f4a13">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f3c0de9-2414-4759-9374-a7f8256a80d9"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
 				<text><![CDATA[Motorista]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
+		<band height="22" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<rectangle>
-				<reportElement x="0" y="0" width="535" height="30" uuid="1dd593bc-7163-454e-8e45-dc01981047d9"/>
+				<reportElement x="0" y="-2" width="530" height="24" uuid="1dd593bc-7163-454e-8e45-dc01981047d9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
 			</rectangle>
 			<textField>
-				<reportElement x="13" y="0" width="169" height="30" uuid="cce8312d-3999-493f-ab89-16099086e555">
+				<reportElement x="13" y="-2" width="169" height="22" uuid="cce8312d-3999-493f-ab89-16099086e555">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a0952977-ab3f-4be2-871a-f6693a5cd654"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="182" y="0" width="98" height="30" uuid="52e9a91b-b74b-4bff-aafb-25ad88359631">
+				<reportElement x="182" y="-2" width="98" height="22" uuid="52e9a91b-b74b-4bff-aafb-25ad88359631">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="513aa021-fc14-485c-9939-e1e3c6de7830"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{placa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="283" y="0" width="98" height="30" uuid="b1dc239f-955a-4ff6-aca7-a1fac0845c9c">
+				<reportElement x="283" y="-2" width="98" height="22" uuid="b1dc239f-955a-4ff6-aca7-a1fac0845c9c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="bc5fa07e-2f7b-470a-beb4-1e9d6b83faa8"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{marca}.getNome()]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="386" y="0" width="104" height="30" uuid="c2ef3053-0f72-4eea-8ada-d87ddcca7295">
+				<reportElement x="386" y="-2" width="104" height="22" uuid="c2ef3053-0f72-4eea-8ada-d87ddcca7295">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6f3c0de9-2414-4759-9374-a7f8256a80d9"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{motorista}.getNome()]]></textFieldExpression>

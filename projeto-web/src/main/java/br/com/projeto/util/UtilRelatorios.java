@@ -34,8 +34,9 @@ public class UtilRelatorios {
 
 	       // InputStream relatorioStream = sContext.getResourceAsStream(path + relatorioNome + ".jasper");
 	        
-	        if (relatorioNome == null) {
-	            throw new RuntimeException("Relatório não encontrado: " + relatorioNome);
+	        File file = new File(relatorio);
+	        if (!file.exists()) {
+	            throw new RuntimeException("Relatório não encontrado: " + relatorio);
 	        }
 	            
 			//Array de byte

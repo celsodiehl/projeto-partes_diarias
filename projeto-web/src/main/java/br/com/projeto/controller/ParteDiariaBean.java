@@ -1,7 +1,9 @@
 package br.com.projeto.controller;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import br.com.projeto.exception.NegocioException;
@@ -15,6 +17,7 @@ import br.com.projeto.service.ObraService;
 import br.com.projeto.service.ParteDiariaService;
 import br.com.projeto.service.ServicoService;
 import br.com.projeto.service.VeiculoService;
+import br.com.projeto.util.UtilRelatorios;
 import br.com.projeto.utility.Message;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
@@ -50,6 +53,10 @@ public class ParteDiariaBean implements Serializable {
 	private List<Contrato> contratos;
 	private List<Veiculo> veiculos;
 	private List<Servico> servicos;
+	
+	//PARA TRAZER NO RELATORIO
+	private Date dataInicio;
+	private Date dataFim;
 
 	// É CONSTRUIDO ASSIM QUE A CLASSE FOR CRIADA
 	@PostConstruct
@@ -85,6 +92,31 @@ public class ParteDiariaBean implements Serializable {
 			Message.erro(e.getMessage());
 		}
 	}
+	
+	public void imprimirRelatorio() {
+		 // busca dados
+	    List<ParteDiaria> lista = service.porPeriodo(dataInicio, dataFim,
+	            ptdia.getVeiculo()
+	    );
+
+	    // parâmetros do relatório
+	    HashMap<String, Object> parametros = new HashMap<>();
+
+	    parametros.put("VEICULO", ptdia.getVeiculo().getModelo());
+	    parametros.put("DATA_INICIO", dataInicio);
+	    parametros.put("DATA_FIM", dataFim);
+
+	    // chama util
+	    UtilRelatorios.imprimeRelatorio(
+	            "RelPartesDiarias", parametros, lista
+	    );
+	}
+	
+    //USAR NO RELATORIO DATA
+	//public List<ParteDiaria> porData(Date ini, Date fim) {
+	//    ptdias = service.porPeriodoVeiculo(ini, fim, ptdia.getVeiculo());
+	  //  return ptdias;
+	//}
 
 	public void carregarVeiculos() {
 
@@ -163,5 +195,23 @@ public class ParteDiariaBean implements Serializable {
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
+
+	public Date getDataInicio() {
+		return dataInicio;
+	}
+
+	public void setDataInicio(Date dataInicio) {
+		this.dataInicio = dataInicio;
+	}
+
+	public Date getDataFim() {
+		return dataFim;
+	}
+
+	public void setDataFim(Date dataFim) {
+		this.dataFim = dataFim;
+	}
+	
+	
 
 }
