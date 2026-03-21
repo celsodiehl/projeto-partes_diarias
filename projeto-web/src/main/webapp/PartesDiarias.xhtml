@@ -8,67 +8,19 @@
 	<ui:composition template="estrutura.xhtml">
 	
 		<ui:define name="titulo">Cadastro de Partes Diárias</ui:define>
-		<h1>Cadastro de Partes Diárias</h1>
 		
-<!-- BARRA DE IMPRIMIR -->
-<h:form id="formRelatorio">
+<p:tabView>
 
-    <div class="card">
-
-        <p:toolbar style="margin-top:20px">
-
-            <!-- FILTROS (ESQUERDA) -->
-            <p:toolbarGroup align="left">
-
-                <p:outputLabel value="Contrato" style="margin-left:10px"/>
-                <p:selectOneMenu value="#{parteDiariaBean.ptdia.contrato}"
-                                 converter="contratoConverter" required="true" style="width:240px">
-
-                    <f:selectItem itemLabel="Selecione um Contrato" noSelectionOption="true"/>
-                    <f:selectItems value="#{parteDiariaBean.contratos}" var="e" itemLabel="#{e.nome}" itemValue="#{e}"/>
-
-                    <p:ajax listener="#{parteDiariaBean.carregarVeiculos}" update="veiculo" resetValues="true"/>
-                </p:selectOneMenu>
-
-                <p:outputLabel value="Veiculo" style="margin-left:10px"/>
-                <p:selectOneMenu id="veiculo" value="#{parteDiariaBean.ptdia.veiculo}"
-                                 converter="veiculoConverter" required="true" style="width:240px">
-
-                    <f:selectItem itemLabel="Selecione um Veiculo" noSelectionOption="true"/>
-                    <f:selectItems value="#{parteDiariaBean.veiculos}"
-                                   var="e" itemLabel="#{e.placa}" itemValue="#{e}"/>
-                </p:selectOneMenu>
-
-                <p:outputLabel for="datainicio" value="Inicio" style="margin-left:10px"/>
-                <p:datePicker id="datainicio" value="#{parteDiariaBean.dataInicio}"
-                              pattern="dd/MM/yyyy" showIcon="true" required="true"/>
-                              
-                 <p:outputLabel for="datafim" value="Fim" style="margin-left:10px"/>
-                <p:datePicker id="datafim" value="#{parteDiariaBean.dataFim}"
-                              pattern="dd/MM/yyyy" showIcon="true" required="true"/>
-
-            </p:toolbarGroup>
-
-            <!-- BOTÃO (DIREITA) -->
-            <p:toolbarGroup>
-            
-				<p:commandButton value="Imprimir" icon="pi pi-print" styleClass="mr-2" action="#{parteDiariaBean.imprimirRelatorio}" process="@form" ajax="false" onclick="this.form.target = '_blank';" />
-
-            </p:toolbarGroup>
-
-        </p:toolbar>
-
-    </div>
-
-</h:form>
+ <!-- Aba 1: Dados Básicos -->
+ <p:tab title="Cadastro">
 		
 <h:form id="formCadastro">
 
 		<p:messages id="messages" closable="true" />
 
-<!-- FORMULARIO DE CADASTRO-->
-<!-- 1ª Linha -->
-<div class="formgrid grid align-items-end">
+ <!-- FORMULARIO DE CADASTRO-->
+ <!-- 1ª Linha -->
+ <div class="formgrid grid align-items-end">
 
     <!-- Nome Obra -->
     <div class="field col-12 md:col-3">
@@ -98,8 +50,8 @@
 
 </div>
 
-<!-- 2ª Linha -->
-<div class="formgrid grid">
+ <!-- 2ª Linha -->
+ <div class="formgrid grid">
 
     <div class="field col-12 md:col-2">
         <p:outputLabel value="Contrato" />
@@ -130,7 +82,7 @@
                      readonly="true" style="width:100%"/>
     </div>
 
-<div class="field col-12 md:col-2">
+ <div class="field col-12 md:col-2">
 
     <p:outputPanel id="painelValor">
 
@@ -149,14 +101,14 @@
 
     <div class="field col-12 md:col-2">
         <p:outputLabel value="Data" />
-        <p:datePicker value="#{parteDiariaBean.ptdia.data}"
-                      pattern="dd/MM/yyyy" showIcon="true" required="true" style="width:100%"/>
+        <p:datePicker id="data" value="#{parteDiariaBean.ptdia.data}"
+                      pattern="dd/MM/yyyy" showIcon="true" required="true" style="width:100%; display:flex; align-items:center;" />
     </div>
-
+    
 </div>
 
-<!-- 3ª Linha -->
-<div class="grid">
+ <!-- 3ª Linha -->
+ <div class="grid">
 
     <div class="col-12 md:col-6">
         <p:fieldset legend="Dados de HORAS">
@@ -198,8 +150,8 @@
 
 </div>
 
-<!-- Serviço e Oservação -->
-<div class="formgrid grid">
+ <!-- Serviço e Oservação -->
+ <div class="formgrid grid">
 
     <div class="field col-12 md:col-6">
         <p:outputLabel value="Serviço"/>
@@ -218,14 +170,14 @@
                          placeholder="Descreva algum comentário aqui..."/>
     </div>
 
-</div>
+ </div>
 		
 		<div class="card">
 
 			<p:toolbar style="margin-top: 20px">
 
 				<p:toolbarGroup>
-					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{parteDiariaBean.adicionar}" update=":formCadastro:messages :formCadastro" />
+					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{parteDiariaBean.adicionar}" update="messages formCadastro" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
@@ -234,8 +186,156 @@
 			</p:toolbar>
 
 		</div>
-
+		
 	</h:form>
+	
+	<!-- FIM DA 1ª ABA -->
+	</p:tab>
+
+  <!-- Aba 2: Relatorio -->
+  <p:tab title="Relatório">
+        
+<!-- BARRA DE IMPRIMIR -->
+<h:form id="formRelatorio">
+
+    <div class="card">
+
+        <p:toolbar style="margin-top:20px">
+
+            <!-- FILTROS (ESQUERDA) -->
+            <p:toolbarGroup align="left">
+
+                <p:outputLabel value="Contrato" style="margin-left:10px"/>
+                  <p:selectOneMenu value="#{parteDiariaBean.ptdia.contrato}"
+                                 converter="contratoConverter" required="true" style="width:240px">
+
+                    <f:selectItem itemLabel="Selecione um Contrato" noSelectionOption="true"/>
+                      <f:selectItems value="#{parteDiariaBean.contratos}" var="e" itemLabel="#{e.nome}" itemValue="#{e}"/>
+
+                    <p:ajax listener="#{parteDiariaBean.carregarVeiculos}" update="veiculo" resetValues="true"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel value="Veiculo" style="margin-left:10px"/>
+                <p:selectOneMenu id="veiculo" value="#{parteDiariaBean.ptdia.veiculo}"
+                                 converter="veiculoConverter" required="true" style="width:240px">
+
+                    <f:selectItem itemLabel="Selecione um Veiculo" noSelectionOption="true"/>
+                      <f:selectItems value="#{parteDiariaBean.veiculos}"
+                                   var="e" itemLabel="#{e.placa}" itemValue="#{e}"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel for="datainicio" value="Inicio" style="margin-left:10px"/>
+                    <p:datePicker id="datainicio" value="#{parteDiariaBean.dataInicio}"
+                              pattern="dd/MM/yyyy" showIcon="true" required="true"/>
+                              
+                 <p:outputLabel for="datafim" value="Fim" style="margin-left:10px"/>
+                    <p:datePicker id="datafim" value="#{parteDiariaBean.dataFim}"
+                              pattern="dd/MM/yyyy" showIcon="true" required="true"/>
+
+            </p:toolbarGroup>
+
+            <!-- BOTÃO (DIREITA) -->
+            <p:toolbarGroup>
+            
+				<p:commandButton value="Imprimir" icon="pi pi-print" styleClass="mr-2" action="#{parteDiariaBean.imprimirRelatorio}" 
+				      process="@form" ajax="false" onclick="this.form.target = '_blank';" />
+
+            </p:toolbarGroup>
+
+        </p:toolbar>
+
+    </div>
+
+</h:form>
+
+<!-- Datatable com todas Partes Diarias-->
+<h:form>
+	<p:dataTable value="#{parteDiariaBean.ptdias}" var="obj" id="tabela" paginator="true" rows="5"  tableStyle="min-width:1850px" style="width:1850px; white-space:nowrap">
+			
+			<p:column headerText="Obra" style="width:100px">
+    			<p:outputLabel value="#{obj.obra.nome}" />
+			</p:column>
+			
+			<p:column headerText="Contrato" style="width:100px">
+				<p:outputLabel value="#{obj.contrato.nome}" />
+			</p:column>
+			
+			<p:column headerText="Veículos" style="width:150px">
+    			<ui:repeat value="#{obj.contrato.veiculos}" var="cv" varStatus="status">
+       			 	#{cv.veiculo.modelo}#{!status.last ? ', ' : ''}
+   				 </ui:repeat>
+			</p:column>
+			
+			<p:column headerText="Data">
+				<p:outputLabel value="#{obj.data}" style="width:150px" />
+			</p:column>
+			
+			<p:column headerText="Hr Inicio">
+				<p:outputLabel value="#{obj.horaInicio}" style="width:80px" />
+			</p:column>
+			
+			<p:column headerText="Hr Final">
+				<p:outputLabel value="#{obj.horaFim}" style="width:80px" />
+			</p:column>
+			
+			<p:column headerText="Odom Início">
+				<p:outputLabel value="#{obj.odomInicio}" style="width:100px" />
+			</p:column>
+			
+			<p:column headerText="Odom Fim">
+				<p:outputLabel value="#{obj.odomFim}" style="width:100px" />
+			</p:column>
+			
+			<p:column headerText="Serviço">
+				<p:outputLabel value="#{obj.servico.nome}" style="width:150px" />
+			</p:column>
+			
+			<p:column headerText="Observação">
+				<p:outputLabel value="#{obj.observacao}" style="width:150px" />
+			</p:column>
+			
+			<p:column headerText="Ações" width="500">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update="formDialog" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
+					<f:setPropertyActionListener value="#{obj}" target="#{parteDiariaBean.ptdia}" />
+				</p:commandButton>
+							
+				<p:commandButton icon="pi pi-trash" styleClass="p-button-rounded p-button-danger mr-2" update="tabela" process="@this" width="100">
+					<f:setPropertyActionListener value="#{obj}" target="#{parteDiariaBean.ptdia}"/>
+				</p:commandButton>
+				
+
+			</p:column>
+			
+	</p:dataTable>
+	
+</h:form><!-- FIM Datatable com todas Partes Diarias-->
+
+	<!-- DIALOG DE EDIÇÃO-->
+	<p:dialog header="Editar Parte Diária" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="450">
+
+    	<h:form id="formDialog">
+
+			<div class="field">
+        		<p:outputLabel value="Obra" />
+        		<p:inputText value="#{parteDiariaBean.ptdia.obra.nome}" />
+        	</div>
+        
+        	<div class="field">
+        		<p:outputLabel value="Contrato" />
+        		<p:inputText value="#{parteDiariaBean.ptdia.contrato.nome}" />
+        		<br/>
+        	</div>
+        	
+        	<br/><br/>
+        	<p:commandButton value="Salvar" action="#{parteDiariaBean.adicionar}" update="formCadastro tabela" oncomplete="PF('dlgEditar').hide()" />
+
+    	</h:form>
+
+	</p:dialog>
+            
+   </p:tab>
+        
+</p:tabView>
 	
 	</ui:composition>
 
