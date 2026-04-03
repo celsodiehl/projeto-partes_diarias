@@ -1,11 +1,20 @@
 package br.com.projeto.controller;
 
+import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Entities;
 import org.primefaces.model.DualListModel;
+
+import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 
 import br.com.projeto.exception.NegocioException;
 import br.com.projeto.model.Contratado;
@@ -18,9 +27,11 @@ import br.com.projeto.service.ContratoVeiculoService;
 import br.com.projeto.service.VeiculoService;
 import br.com.projeto.utility.Message;
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Named
 @ViewScoped
@@ -178,6 +189,108 @@ public class ContratoBean implements Serializable {
 		List<Veiculo> veiculos = veiculoService.buscarPorContratado(contrato.getContratado());
 
 		dualVeiculos = new DualListModel<>(new ArrayList<>(veiculos), new ArrayList<>());
+	}
+	
+	//Editar tinyMce
+	public void editar(Contrato obj) {
+	    //System.out.println("Chamou editar!");
+	    this.contrato = obj;
+	    
+	    //System.out.println("Conteúdo: " + obj.getConteudo());
+	}
+	
+	//Salvar tinyMce
+	public void salvarContrato() throws NegocioException {
+
+	    // Aqui o conteúdo do TinyMCE já está em:
+	    // contrato.getConteudo()
+
+	    if (contrato.getConteudo() == null || contrato.getConteudo().isBlank()) {
+	        System.out.println("Conteúdo vazio!");
+	    }
+
+	    // Salva no banco
+	    service.salvar(contrato);
+
+	    System.out.println("Salvo com sucesso!");
+	}
+
+	/* Gerar/Imprimir Contrato	*/
+	public String gerarHtmlFinal() {
+
+	    String html = contrato.getConteudo();
+
+	    if (html == null) html = "";
+	    
+	    html = html.replace("nome", contrato.getNome());
+	    html = html.replace("contratado", contrato.getContratado().getNome());
+	    
+	    html = html.replace("valor", 
+		        NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(contrato.getValor()));
+
+	    html = html.replace("tipocontrato", contrato.getTipocontrato().getDescricao());
+
+	    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+	    html = html.replace("dataInicio", contrato.getDatainicio().format(fmt));
+	    html = html.replace("dataFim", contrato.getDatafim().format(fmt));
+
+	    String veiculos = contrato.getVeiculos().stream()
+	            .map(v -> v.getVeiculo().getModelo())
+	            .collect(Collectors.joining(", "));
+
+	    html = html.replace("veiculos", veiculos);
+	    
+	    String placas = contrato.getVeiculos().stream()
+	            .map(v -> v.getVeiculo().getPlaca())
+	            .collect(Collectors.joining(", "));
+
+	    html = html.replace("placas", placas);
+
+	    // 🔥 Limpa e transforma em XHTML
+	    Document doc = Jsoup.parse(html);
+	    doc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
+	    doc.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
+	    
+	    // 🔥 GARANTE estrutura completa
+	    return "<html>" +
+	       "<head>" +
+	       "<meta charset=\"UTF-8\" />" +
+	       "<style>" +
+           ".ql-align-center { text-align: center; }" +
+           ".ql-align-right { text-align: right; }" +
+           ".ql-align-justify { text-align: justify; }" +
+	       "</style>" +
+	       "</head>" +
+	       "<body>" + doc.body().html() + "</body>" +
+	       "</html>";
+	    
+	}
+	
+	private String substituir(String html, String variavel, String valor) {
+	    return html.replaceAll("\\{\\{\\s*" + variavel + "\\s*\\}\\}", valor);
+	}
+
+	//Retorna no Browser
+	public void gerarPdf() throws Exception {
+
+	    String html = gerarHtmlFinal();
+
+	    FacesContext context = FacesContext.getCurrentInstance();
+	    HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
+
+	    response.setContentType("application/pdf");
+	    response.setHeader("Content-Disposition", "inline; filename=contrato.pdf");
+
+	    OutputStream os = response.getOutputStream();
+
+	    PdfRendererBuilder builder = new PdfRendererBuilder();
+	    builder.withHtmlContent(html, null);
+	    builder.toStream(os);
+	    builder.run();
+
+	    os.close();
+	    context.responseComplete();
 	}
 
 }

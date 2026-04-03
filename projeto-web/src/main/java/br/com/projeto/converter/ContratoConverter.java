@@ -6,7 +6,7 @@ import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
 import jakarta.faces.convert.FacesConverter;
-import jakarta.inject.Inject;
+import jakarta.inject.Inject;	
 
 @FacesConverter(value = "contratoConverter", managed = true)
 public class ContratoConverter implements Converter<Contrato> {

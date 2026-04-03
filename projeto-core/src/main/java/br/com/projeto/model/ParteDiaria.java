@@ -1,10 +1,9 @@
 package br.com.projeto.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
@@ -13,8 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "parte_diaria")
@@ -42,9 +39,7 @@ public class ParteDiaria implements Serializable, Base{
     @JoinColumn(name = "servico_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_servico"))
     private Servico servico;
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "data")
-    private Date data;
+    private LocalDate data;
     
 	private LocalTime horaInicio;
     private LocalTime horaFim;
@@ -83,12 +78,12 @@ public class ParteDiaria implements Serializable, Base{
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
-	
-	public Date getData() {
+
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 

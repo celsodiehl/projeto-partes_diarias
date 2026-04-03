@@ -46,6 +46,18 @@
             <p:outputLabel value="CNPJ" />
             <p:inputMask mask="99.999.999.9999-99" value="#{contratadoBean.contratado.cnpj}" required="true" label="CNPJ"/>
             
+            <p:outputLabel value="Razão Social" />
+			<p:inputText size="30" value="#{contratadoBean.contratado.razaosocial}" required="true" label="Razao" />
+					
+			<p:outputLabel value="Inscrição Estadual" />
+			<p:inputText size="30" value="#{contratadoBean.contratado.inscricao}" required="true" label="Inscrição" />
+					
+			<p:outputLabel value="Endereço" />
+			<p:inputText size="30" value="#{contratadoBean.contratado.endereco}" required="true" label="Endereço" />
+					
+			<p:outputLabel value="Responsável" />
+			<p:inputText size="30" value="#{contratadoBean.contratado.responsavel}" required="true" label="Responsável" />
+            
         </p:panelGrid>
       
    </div>
@@ -76,7 +88,7 @@
 				<p:outputLabel value="#{obj.cnpj}" />
 			</p:column>
 			
-			<p:column headerText="Ações" width="500">
+			<p:column headerText="Ações" width="500" style="text-align:center;">
 				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{contratadoBean.contratado}" />
 				</p:commandButton>

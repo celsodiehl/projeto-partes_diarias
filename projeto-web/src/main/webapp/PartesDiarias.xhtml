@@ -11,8 +11,8 @@
 		
 <p:tabView>
 
- <!-- Aba 1: Dados Básicos -->
- <p:tab title="Cadastro">
+<!-- Aba 1: Dados Básicos -->
+<p:tab title="Cadastro">
 		
 <h:form id="formCadastro">
 
@@ -189,8 +189,8 @@
 		
 	</h:form>
 	
-	<!-- FIM DA 1ª ABA -->
-	</p:tab>
+ <!-- FIM DA 1ª ABA -->
+ </p:tab>
 
   <!-- Aba 2: Relatorio -->
   <p:tab title="Relatório">
@@ -260,22 +260,20 @@
 				<p:outputLabel value="#{obj.contrato.nome}" />
 			</p:column>
 			
-			<p:column headerText="Veículos" style="width:150px">
-    			<ui:repeat value="#{obj.contrato.veiculos}" var="cv" varStatus="status">
-       			 	#{cv.veiculo.modelo}#{!status.last ? ', ' : ''}
-   				 </ui:repeat>
+			<p:column headerText="Veiculo" style="width:90px">
+				<p:outputLabel value="#{obj.veiculo.placa}" />
 			</p:column>
 			
-			<p:column headerText="Data">
-				<p:outputLabel value="#{obj.data}" style="width:150px" />
+			<p:column headerText="Data" style="width:60px">
+				<p:outputLabel value="#{obj.data}"  pattern="dd/MM/yyyy" style="width:60px" />
 			</p:column>
 			
 			<p:column headerText="Hr Inicio">
-				<p:outputLabel value="#{obj.horaInicio}" style="width:80px" />
+				<p:outputLabel value="#{obj.horaInicio}" style="width:40px" />
 			</p:column>
 			
 			<p:column headerText="Hr Final">
-				<p:outputLabel value="#{obj.horaFim}" style="width:80px" />
+				<p:outputLabel value="#{obj.horaFim}" style="width:40px" />
 			</p:column>
 			
 			<p:column headerText="Odom Início">

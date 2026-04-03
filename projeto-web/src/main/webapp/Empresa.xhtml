@@ -22,7 +22,19 @@
 					<p:inputText size="30" value="#{empresaBean.empresa.nome}" required="true" label="Nome" />
 					
 					<p:outputLabel value="CNPJ" />
-					<p:inputText size="30" value="#{empresaBean.empresa.cnpj}" required="true" label="CNPJ" />
+					<p:inputMask mask="99.999.999.9999-99" value="#{empresaBean.empresa.cnpj}" required="true" label="CNPJ"/>
+					
+					<p:outputLabel value="Razão Social" />
+					<p:inputText size="30" value="#{empresaBean.empresa.razaosocial}" required="true" label="Razao" />
+					
+					<p:outputLabel value="Inscrição Estadual" />
+					<p:inputText size="30" value="#{empresaBean.empresa.inscricao}" required="true" label="Inscrição" />
+					
+					<p:outputLabel value="Endereço" />
+					<p:inputText size="30" value="#{empresaBean.empresa.endereco}" required="true" label="Endereço" />
+					
+					<p:outputLabel value="Responsável" />
+					<p:inputText size="30" value="#{empresaBean.empresa.responsavel}" required="true" label="Responsável" />
 
 					<p:outputLabel />
 					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{empresaBean.adicionar}" update=":formCadastro:messages :formCadastro" style="margin-top: 10px; width: 290px; height: 40px;" />
@@ -35,7 +47,7 @@
 		
 	</h:form>
 	
-	<!-- DATATABLE COM TODAS EMPRESAS-->
+	<!-- DATATABLE COM EMPRESA -->
 	<h:form>
 		<p:dataTable value="#{empresaBean.empresas}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
 			

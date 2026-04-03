@@ -25,7 +25,16 @@ import jakarta.persistence.Table;
 		private Long id;
 		
 		private String nome;
+		
 		private String cnpj;
+		
+		private String razaosocial;
+		
+		private String inscricao;
+		
+		private String endereco;
+		
+		private String responsavel;
 		
 		/* LISTA DE VEICULOS DO PRESTADOR/CONTRATADO */
 		@OneToMany(fetch = FetchType.EAGER, mappedBy = "contratado")
@@ -50,6 +59,31 @@ import jakarta.persistence.Table;
 		}
 		public void setCnpj(String cnpj) {
 			this.cnpj = cnpj;
+		}
+		
+		public String getRazaosocial() {
+			return razaosocial;
+		}
+		public void setRazaosocial(String razaosocial) {
+			this.razaosocial = razaosocial;
+		}
+		public String getInscricao() {
+			return inscricao;
+		}
+		public void setInscricao(String inscricao) {
+			this.inscricao = inscricao;
+		}
+		public String getEndereco() {
+			return endereco;
+		}
+		public void setEndereco(String endereco) {
+			this.endereco = endereco;
+		}
+		public String getResponsavel() {
+			return responsavel;
+		}
+		public void setResponsavel(String responsavel) {
+			this.responsavel = responsavel;
 		}
 		public List<Veiculo> getVeiculos() {
 			return veiculos;

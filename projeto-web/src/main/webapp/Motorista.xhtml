@@ -48,7 +48,8 @@
 			</p:column>
 			
 			<p:column headerText="Ações" width="500">
-				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" process="@this" oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
+				<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" update=":formDialog" process="@this" 
+					oncomplete="PF('dlgEditar').show()" style="margin-top: 10px" width="100">
 					<f:setPropertyActionListener value="#{obj}" target="#{motoristaBean.motorista}" />
 				</p:commandButton>
 				

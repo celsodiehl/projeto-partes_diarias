@@ -11,15 +11,127 @@
 
 	<h1>Cadastro de Contratos</h1>
 
-	<h:form id="formCadastro">
+<h:form id="formCadastro">
 
+		<p:messages id="messages" closable="true" />
+
+ <!-- FORMULARIO DE CADASTRO-->
+ <!-- 1ª Linha -->
+ <div class="formgrid grid align-items-end">
+ 	    <div class="field col-12 md:col-3">
+
+			<p:outputLabel value="Nome" />
+        		<p:inputText id="nome" value="#{contratoBean.contrato.nome}"
+                      required="true" style="width:100%"/>
+                     
+		</div>
+		
+   <div class="field col-12 md:col-3">
+        <p:outputLabel value="Contratado" />
+        <p:selectOneMenu value="#{contratoBean.contrato.contratado}" converter="contratadoConverter" required="true" style="width:100%">
+        
+            <f:selectItem itemLabel="Selecione o Contratado" noSelectionOption="true"/>
+            <f:selectItems value="#{contratoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
+            
+        </p:selectOneMenu>
+    </div>
+    
+ </div>
+	
+<!--2ª linha  DUAL Veiculos -->		
+<div class="formgrid grid">
+    <div class="field col-12">
+        <p:outputLabel value="Selecione o Veiculo(s)" />
+        	<p:pickList value="#{contratoBean.dualVeiculos}" var="v" itemLabel="#{v.modelo}" itemValue="#{v}" required="true"
+        		converter="veiculoConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" />
+    </div>
+</div>
+							
+<!-- 3ª Linha -->				
+<div class="formgrid grid align-items-end">
+
+    <!-- Data -->
+    <div class="field col-12 md:col-2">
+        <p:outputLabel for="dataInicio" value="Data Início" />
+        <p:datePicker id="dataInicio" value="#{contratoBean.contrato.datainicio}" required="true"
+                      pattern="dd/MM/yyyy" showIcon="true" iconDisplay="input" style="width:100%" />
+    </div>
+
+    <!-- Data Encerramento -->
+    <div class="field col-12 md:col-2">
+        <p:outputLabel for="dataFim" value="Data Encerramento" />
+        <p:datePicker id="dataFim" value="#{contratoBean.contrato.datafim}" required="true"
+                      pattern="dd/MM/yyyy" showIcon="true" iconDisplay="input" style="width:100%" />
+    </div>
+
+    <!-- Ativo -->
+    <div class="field col-12 md:col-1 flex align-items-end">
+        <div>
+            <p:outputLabel for="ativo" value="Ativo" />
+            <br/>
+            <p:selectBooleanCheckbox id="ativo"
+               value="#{contratoBean.contrato.ativo}" />
+        </div>
+    </div>
+
+    <!-- Tipo de contrato -->
+    <div class="field col-12 md:col-3">
+        <p:outputLabel value="Tipo de Contrato" />
+        <p:selectOneRadio value="#{contratoBean.contrato.tipocontrato}"
+                          layout="lineDirection">
+            <p:ajax update="painelValor" />
+            <f:selectItem itemLabel="Diária" itemValue="DIARIA" />
+            <f:selectItem itemLabel="Mensal" itemValue="MENSAL" />
+        </p:selectOneRadio>
+    </div>
+
+    <!-- Valor -->
+    <div class="field col-12 md:col-3">
+        <p:outputPanel id="painelValor">
+
+            <p:outputLabel
+                rendered="#{not empty contratoBean.contrato.tipocontrato}"
+                value="Valor #{contratoBean.contrato.tipocontrato == 'DIARIA' ? 'da Diária' : 'Mensal'}" />
+
+            <p:inputNumber id="valor"
+                rendered="#{not empty contratoBean.contrato.tipocontrato}"
+                value="#{contratoBean.contrato.valor}" decimalPlaces="2" style="width:100%" />
+
+        </p:outputPanel>
+    </div>
+
+</div>
+  			
+  		<!--  TinyMCE -->
+  		<p:textEditor id="conteudo" widgetVar="editor" value="#{contratoBean.contrato.conteudo}" 
+                      height="300" placeholder="Digite o contrato aqui...">
+                      
+            <f:facet name="toolbar">
+                <span class="ql-formats">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-strike"></button>
+                    <button class="ql-align" value=""></button>
+        			<button class="ql-align" value="center"></button>
+        			<button class="ql-align" value="right"></button>
+        			<button class="ql-align" value="justify"></button>
+                </span>
+                
+                <span class="ql-formats">
+                    <select class="ql-font"></select>
+                    <select class="ql-size"></select>
+                </span>
+            </f:facet>
+        </p:textEditor>
+
+		<!-- Botões -->
 		<div class="card">
 
 			<p:toolbar style="margin-top: 20px">
 
 				<p:toolbarGroup>
-					<p:commandButton type="button" value="Novo" icon="pi pi-plus" styleClass="mr-2" />
-					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{contratoBean.adicionar}" update=":formCadastro:messages :formCadastro" />
+					<p:commandButton id="salvarBtn" value="Salvar" icon="pi pi-save" styleClass="ui-button-success"	action="#{contratoBean.adicionar}" update="messages formCadastro" />
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
@@ -28,143 +140,74 @@
 			</p:toolbar>
 
 		</div>
-
-		<p:messages id="messages" closable="true" />
-
-	    <!-- FORMULARIO DE CADASTRO-->
-		<div class="ui-fluid">
-
-			<p:panelGrid columns="4" layout="grid" columnClasses="ui-grid-col-2, ui-grid-col-10" style="margin-top: 20px">
-			
-			<p:row>
-				<p:outputLabel for="nome" value="Nome" />
-				<p:inputText id="nome" value="#{contratoBean.contrato.nome}" />
-			</p:row>
-				
-			<p:row>
-				<p:outputLabel value="Contratado" />
-					<p:selectOneMenu value="#{contratoBean.contrato.contratado}" converter="contratadoConverter" required="true" label="Contratado"	style="width: 290px; height: 40px;">
-						<f:selectItem itemLabel="Selecione o Contratado" noSelectionOption="true" />
-						<f:selectItems value="#{contratoBean.contratados}" var="e" itemLabel="#{e.nome}" itemValue="#{e}" />
-				</p:selectOneMenu>
-			</p:row>
-			
-			<p:row>
-				<p:outputLabel value="Selecione o Veiculo(s)" />
-					<p:pickList value="#{contratoBean.dualVeiculos}" var="v" itemLabel="#{v.modelo}" itemValue="#{v}"
-            			converter="veiculoConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" responsive="true" />
-			</p:row>
-				
-			<p:row>
-			  <p:column styleClass="ui-grid-col-2">
-			    <p:outputLabel for="dataInicio" value="Data Início" />
-			  </p:column>
-			  
-			  <p:column styleClass="ui-grid-col-2">
-				<p:datePicker id="dataInicio" value="#{contratoBean.contrato.datainicio}" pattern="dd/MM/yyyy" showIcon="true" required="true" label="Data Inicio"/>
-			  </p:column>
-				
-			   <p:column styleClass="ui-grid-col-2">
-			     <p:outputLabel for="dataInicio" value="Data Encerramento" />
-			   </p:column>
-			   
-			   <p:column styleClass="ui-grid-col-2">
-				  <p:datePicker id="dataFim" value="#{contratoBean.contrato.datafim}" pattern="dd/MM/yyyy" showIcon="true" required="true" label="Data Fim"/>
-			   </p:column>
-			
-			  <p:column styleClass="ui-grid-col-2">
-				<p:outputLabel for="ativo" value="Ativo" />
-    			<p:selectBooleanCheckbox id="ativo" value="#{contratoBean.contrato.ativo}" />
-    		  </p:column>
-  			</p:row>
-  			
-  			<p:row>
-			  <p:column styleClass="ui-grid-col-1">
-			        <p:outputLabel value="Tipo de Contrato" />
-			    </p:column>
-			  
-			   <p:column styleClass="ui-grid-col-2">
-			        <p:selectOneRadio value="#{contratoBean.contrato.tipocontrato}" layout="lineDirection" required="true">
-			            <p:ajax update="painelValor" />
-			
-			            <f:selectItem itemLabel="Diária" itemValue="DIARIA" />
-			            <f:selectItem itemLabel="Mensal" itemValue="MENSAL" />
-			        </p:selectOneRadio>
-			    </p:column>
-				
-				<p:column styleClass="ui-grid-col-3">
-			
-			        <p:outputPanel id="painelValor" style="display:flex; align-items:center; gap:10px;">
-			
-			            <p:outputLabel rendered="#{not empty contratoBean.contrato.tipocontrato}"
-			                value="Valor #{contratoBean.contrato.tipocontrato == 'DIARIA' ? 'da Diária' : 'Mensal'}" />
-			
-			            <p:inputNumber id="valor" rendered="#{not empty contratoBean.contrato.tipocontrato}"
-			                value="#{contratoBean.contrato.valor}" decimalPlaces="2" required="true" label="Valor" style="width: 200px" />
-			
-			        </p:outputPanel>
-			
-			    </p:column>
-  			</p:row>
-  		
-    	</p:panelGrid>
-
-		</div>
-
+		
 	</h:form>
 	
-		<!-- DATATABLE COM TODOS CONTRATOS-->
-		<h:form>
-			<p:dataTable value="#{contratoBean.contratos}" var="obj" id="tabela" paginator="true" rows="5" responsiveLayout="scroll">
+	<!-- DATATABLE COM TODOS CONTRATOS-->
+	<h:form>
+			<p:dataTable value="#{contratoBean.contratos}" var="obj" id="tabela" paginator="true" rows="5">
 			
-			<p:column headerText="Contrato Nome">
+			<p:column headerText="Contrato Nome" style="width:120px">
 				<p:outputLabel value="#{obj.nome}" />
 			</p:column>
 			
-			<p:column headerText="Contratado">
+			<p:column headerText="Contratado" style="width:150px">
 				<p:outputLabel value="#{obj.contratado.nome}" />
 			</p:column>
 			
-			<p:column headerText="Veículos">
+			<p:column headerText="Veículos" style="width:150px">
     			<ui:repeat value="#{obj.veiculos}" var="cv" varStatus="status">
        			 	#{cv.veiculo.modelo}#{!status.last ? ', ' : ''}
    				 </ui:repeat>
 			</p:column>
 			
-			<p:column headerText="Data Início">
+			<p:column headerText="Data Início" style="width:70px">
     			<p:outputLabel value="#{obj.datainicio}" />
 			</p:column>
 			
-			<p:column headerText="Encerramento">
+			<p:column headerText="Encerramento" style="width:80px">
 				<p:outputLabel value="#{obj.datafim}" />
 			</p:column>
 			
-			<p:column headerText="Tipo">
+			<p:column headerText="Tipo" style="width:40px">
 				<p:outputLabel value="#{obj.tipocontrato}" />
 			</p:column>
 			
-			<p:column headerText="R$ Contrato">
+			<p:column headerText="R$ Contrato" style="width:100px">
     			<p:outputLabel value="#{obj.valor}">
         			<f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR"/>
     			</p:outputLabel>
 			</p:column>
 			
-			<p:column headerText="Ações" width="500">
-			<p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" style="margin-top: 10px" process="@this" update=":formDialog" 
-    			actionListener="#{contratoBean.prepararEdicao(obj)}" oncomplete="PF('dlgEditar').show()" />
+			<!-- Botão Editar Contrato Campos -->
+			<p:column headerText="Ações" width="100" style="text-align:center;">
+			
+			    <p:commandButton icon="pi pi-pencil" styleClass="p-button-rounded p-button-info mr-2" style="margin-top: 10px" process="@this" update=":formDialog" 
+    				actionListener="#{contratoBean.prepararEdicao(obj)}" oncomplete="PF('dlgEditar').show()" />
 				
 				<p:commandButton icon="pi pi-trash" styleClass="p-button-rounded p-button-danger" process="@this" oncomplete="PF('dlgConfirmExcluir').show()" 
-				update=":tabela :formCadastro">
-					<f:setPropertyActionListener value="#{obj}" target="#{contratoBean.contrato}"/>
+					update=":tabela :formCadastro">
+					<f:setPropertyActionListener value="#{obj}" target="#{contratoBean.contrato}" style="margin-top: 10px" />
 				</p:commandButton>
+
+			</p:column>
+			
+			<!-- Botão Editar Contrato TinyMce -->
+			<p:column headerText="Contrato" width="200" style="text-align:center;">
+								
+				<p:commandButton value="Editar" action="#{contratoBean.editar(obj)}" process="@this" oncomplete="PF('dlgContrato').show()" 
+					update=":formDialogTinyMce:conteudo" styleClass="p-button-rounded p-button-info mr-2" style="margin-top: 10px" />
+				
+				<p:commandButton value="Imprimir" icon="pi pi-print" action="#{contratoBean.gerarPdf}" ajax="false" onclick="this.form.target = '_blank';" />
+				
 			</p:column>
 			
 			</p:dataTable>
 			
 	</h:form> <!-- DATATABLE -->
 	
-	<!-- DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO-->
-	<p:dialog header="Confirmação" widgetVar="dlgConfirmExcluir" modal="true" closable="false" width="350" showEffect="fade" hideEffect="fade">
+<!-- DIALOG DE CONFIRMAÇÃO DE EXCLUSÃO -->
+<p:dialog header="Confirmação" widgetVar="dlgConfirmExcluir" modal="true" closable="false" width="350" showEffect="fade" hideEffect="fade">
 
     	<h:form id="formExcluir" >
 
@@ -180,8 +223,8 @@
 
 </p:dialog>
 	
-	<!-- DIALOG DE EDIÇÃO-->
-	<p:dialog header="Editar Contrato" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="590">
+<!-- DIALOG DE EDIÇÃO CAMPOS -->
+<p:dialog header="Editar Contrato" widgetVar="dlgEditar" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="590">
 
     <h:form id="formDialog">
 
@@ -249,6 +292,41 @@
 
         <p:commandButton value="Salvar" action="#{contratoBean.adicionar}" update=":formCadastro :tabela" oncomplete="PF('dlgEditar').hide()" />
 
+    </h:form>
+
+</p:dialog>
+
+<!-- Dialog de Edição TinyMCE-->
+<p:dialog header="Editar Contrato" widgetVar="dlgContrato" modal="true" closable="true" resizable="false" styleClass="ui-fluid" width="970" dynamic="true">
+
+    <h:form id="formDialogTinyMce">
+    
+      	<!--  TinyMCE -->
+  		<p:textEditor id="conteudo" widgetVar="editor" value="#{contratoBean.contrato.conteudo}" 
+                      height="300" placeholder="Digite o contrato aqui..." >
+                      
+            <f:facet name="toolbar">
+                <span class="ql-formats">
+                    <button class="ql-bold"></button>
+                    <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-strike"></button>
+                    <button class="ql-align" value=""></button>
+        			<button class="ql-align" value="center"></button>
+        			<button class="ql-align" value="right"></button>
+        			<button class="ql-align" value="justify"></button>
+                </span>
+                
+                <span class="ql-formats">
+                    <select class="ql-font"></select>
+                    <select class="ql-size"></select>
+                </span>
+            </f:facet>
+            
+        </p:textEditor>
+        
+        <p:commandButton value="Salvar" action="#{contratoBean.salvarContrato}" process="@form" oncomplete="PF('dlgContrato').hide()" />
+    
     </h:form>
 
 </p:dialog>

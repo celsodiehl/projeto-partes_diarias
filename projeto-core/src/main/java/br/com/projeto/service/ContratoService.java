@@ -34,7 +34,7 @@ public class ContratoService implements Serializable{
 	        "ORDER BY c.nome"
 	    );
 	}
-	
+			
 	public Contrato buscarPorId(Long id) {
 	    return dao.buscarPorId(Contrato.class, id);
 	}
